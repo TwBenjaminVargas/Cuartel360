@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Cuartel</title>
+  <!-- Importar el CSS de Bootstrap -->
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/css/login.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow p-4 rounded-4" style="width: 100%; max-width: 400px;">
+            <img src="../public/img/Logo.png" alt="">
+            <div class="form-floating mb-4">
+                <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                <label for="emailInput">Correo electronico</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                <label for="passwordInput">Contraseña</label>
+            </div>
+            <button id="buttonLogin" type="button" class="btn btn-primary btn-rojo">Iniciar Sesion</button>
+            <p class="text-center mt-3">
+                No tienes cuenta?
+                <a href="../views/registro.html" class="text-decoration-none text-primary">Registrate</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Importar los scripts de Bootstrap -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/index.js"></script>
+</body>
+</html>

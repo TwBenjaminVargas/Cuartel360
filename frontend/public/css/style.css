@@ -1,0 +1,12 @@
+:root {
+  --bordo: #790000;
+  --bordo2: #5e0000;
+}
+.btn-rojo {
+  background-color: var(--bordo);
+  color: white;
+  border: none;
+}
+.btn-rojo:hover {
+  background-color: var(--bordo2);
+}
