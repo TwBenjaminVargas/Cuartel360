@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Cuartel</title>
+  <!-- Importar el CSS de Bootstrap -->
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/css/login.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center margen">
+        <div class="card shadow p-4 rounded-4" style="width: 100%; max-width: 400px;">
+            <img src="../public/img/Logo.png" alt="">
+            <h1>Registrate</h1>
+            <div class="form-floating mb-4">
+                <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                <label for="floatingInput">Correo electronico</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="name" class="form-control" id="nameInput" placeholder="name@example.com">
+                <label for="floatingInput">Nombre</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input class="form-control" id="cuartelInput" placeholder="name@example.com">
+                <label for="floatingInput">Codigo cuartel</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                <label for="floatingPassword">Contraseña</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="passwordControlInput" placeholder="Password">
+                <label for="floatingPassword">Confirmar contraseña</label>
+            </div>
+            <div id="mensajeError" class="text-danger mb-3" style="display: none;"></div>
+            <div id="mensajePassword" class="text-danger mb-3" style="display: none;"></div>
+            <button id="buttonRegistro" type="button" class="btn btn-primary btn-rojo">Crear usuario</button>
+        </div>
+    </div>
+
+    <!-- Importar los scripts de Bootstrap -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/js/registro.js"></script>
+</body>
+</html>
