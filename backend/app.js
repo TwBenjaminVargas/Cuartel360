@@ -1,12 +1,13 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const sequelize = require('./db'); // base de datos
+
 
 // Configuracion el middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use(express.json()); // Middleware para parsear JSON
-
 
 // Endpoint Login
 app.get('/', (req, res) => {
