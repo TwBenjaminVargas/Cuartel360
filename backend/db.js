@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 // Variables de entorno
 require('dotenv').config();
 
-// Conexión básica 
+// Conexión 
 const sequelize = new Sequelize(
   process.env.DB_NAME, // Nombre de la base de datos
   process.env.DB_USER,      // Usuario PostgreSQL
@@ -15,15 +15,25 @@ const sequelize = new Sequelize(
     logging: false,     // Desactiva logs de SQL en consola (opcional)
   }
 );
-
-/* Verificar conexión
-(async () => {
+/**
+ *  Testea la conexion, solicita horario de servidor
+ */
+async function testConnection() {
   try {
-    await sequelize.authenticate();
-    console.log('Conexión a PostgreSQL establecida correctamente.');
+    await sequelize.authenticate(); // Intenta autenticarse
+    console.log('Conexión exitosa a PostgreSQL');
+    
+    // Ejecuta una consulta de prueba
+    const [result] = await sequelize.query('SELECT NOW() AS current_time');
+    console.log('DB Time:', result[0].current_time);
+    
   } catch (error) {
-    console.error('Error al conectar a PostgreSQL:', error);
+    console.error('Error de conexión:', error);
+  } finally {
+    await sequelize.close(); // Cierra la conexión
   }
-})();
-*/
+}
+
+testConnection();
+
 module.exports = sequelize;
