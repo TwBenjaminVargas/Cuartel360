@@ -29,9 +29,9 @@ async function testConnection() {
     
   } catch (error) {
     console.error('Error de conexión:', error);
-  } finally {
+  } /*finally {
     await sequelize.close(); // Cierra la conexión
-  }
+  }*/
 }
 
 testConnection();
