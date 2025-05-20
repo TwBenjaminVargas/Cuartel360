@@ -10,3 +10,18 @@
 .btn-rojo:hover {
   background-color: var(--bordo2);
 }
+.input-invalido {
+  border: 2px solid red;
+}
+.navbar-bordo {
+  background-color: var(--bordo) !important;
+}
+
+.navbar-bordo .navbar-brand,
+.navbar-bordo .nav-link {
+  color: white !important;
+}
+
+.navbar-bordo .nav-link:hover {
+  color: #dddddd !important;
+}

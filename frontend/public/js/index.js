@@ -5,30 +5,48 @@ async function login()
 {
     emailInput = document.getElementById("emailInput")
     passwordInput = document.getElementById("passwordInput")
-    if(validateInput(emailInput) && validateInput(passwordInput))
-    {
-        const datos = {
-            email: emailInput.value,
-            password: passwordInput.value
-          };
-        
-          try {
-                const respuesta = await fetch('http://localhost:3000/', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(datos)
-                });
+    const mensajeError = document.getElementById("mensajeError");
 
-                const resultado = await respuesta.json();
-                manageJSONAnswer(resultado);
+    const emailValid = validateInput(emailInput);
+    const passwordValid = validateInput(passwordInput);
 
-          } catch (error) {
-            console.error('Error:', error);
-          }
-
+    if (!emailValid || !passwordValid) {
+        mensajeError.style.display = "block";
+        mensajeError.textContent = "Por favor, completa todos los campos.";
+        return;
+    } else {
+        mensajeError.style.display = "none";
+        mensajeError.textContent = "";
     }
+
+    const datos = {
+      email: emailInput.value,
+      password: passwordInput.value
+    };
+        
+    try {
+      const respuesta = await fetch('http://localhost:3000/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      });
+
+      const resultado = await respuesta.json();
+
+      if(respuesta.ok){
+        localStorage.setItem('token', resultado.token);
+      }else{
+        console.error('Error:', resultado.error);
+      }
+
+    } catch (error) {
+      mensajeError.style.display = "block";
+      mensajeError.textContent = "Error de conexión con el servidor.";
+      console.error('Error:', error);
+    }
+
 }
 
 /**
@@ -39,10 +57,13 @@ function validateInput(input)
 {
     if (input.value.trim() === "")
     {
+        input.classList.add("input-invalido");
         console.log("Error: Inputs invalidos")
         return false;
+    } else {
+        input.classList.remove("input-invalido");
+        return true;
     }
-    return true
       
 }
 
