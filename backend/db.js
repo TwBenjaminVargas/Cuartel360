@@ -1,8 +1,6 @@
 const { Sequelize } = require('sequelize');
-
 // Variables de entorno
 require('dotenv').config();
-
 // Conexión 
 const sequelize = new Sequelize(
   process.env.DB_NAME, // Nombre de la base de datos
@@ -29,9 +27,9 @@ async function testConnection() {
     
   } catch (error) {
     console.error('Error de conexión:', error);
-  } finally {
+  } /*finally {
     await sequelize.close(); // Cierra la conexión
-  }
+  }*/
 }
 
 testConnection();
