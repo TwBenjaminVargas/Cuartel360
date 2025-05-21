@@ -1,4 +1,5 @@
 -- Se ejecuta unicamente al cargar por primera vez el contenedor docker, de lo contrario reiniciar el volumnen com docker-compose down -v
+-- OBSOLETO desde 20/05/25, ahora se utilizan modelos de sequalize
 create table cuarteles(
 id_cuartel serial primary key,
 nombre varchar(60) not null,
