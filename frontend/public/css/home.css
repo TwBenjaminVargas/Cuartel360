@@ -1,0 +1,5 @@
+.carousel-item img {
+  height: 500px; /* o la altura que desees */
+  object-fit: cover;
+  object-position: center bottom; /* Muestra la parte de abajo de la imagen */
+}
