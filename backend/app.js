@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const sequelize = require('./db'); // base de datos
+const sequelize = require('./models'); // base de datos
 
 
 // Configuracion el middleware para archivos estáticos
