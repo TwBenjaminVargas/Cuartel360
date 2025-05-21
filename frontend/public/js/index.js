@@ -36,6 +36,7 @@ async function login()
       const resultado = await respuesta.json();
 
       if(respuesta.ok){
+        console.log(resultado);
         localStorage.setItem('token', resultado.token);
       }else{
         console.error('Error:', resultado.error);

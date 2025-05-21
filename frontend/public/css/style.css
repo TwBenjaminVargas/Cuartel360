@@ -20,7 +20,7 @@
 .input-invalido {
   border: 2px solid red;
   background-color: #ffe6e6;
-
+}
 .navbar-bordo {
   background-color: var(--bordo) !important;
 }
@@ -32,4 +32,15 @@
 
 .navbar-bordo .nav-link:hover {
   color: #dddddd !important;
+}
+
+.footer-bordo {
+  background-color: var(--bordo);
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+.logo-navbar {
+  max-height: 60px;
+  width: auto;
 }
