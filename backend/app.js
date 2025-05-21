@@ -3,24 +3,14 @@ const path = require('path');
 const app = express();
 const sequelize = require('./models'); // base de datos
 
-
 // Configuracion el middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
-app.use(express.json()); // Middleware para parsear JSON
+app.use(express.json()); // Middleware para procesar JSON
 
 // Endpoint Login
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
-  });
-
-app.post('/', (req, res) => {
-  console.log(req.body);
-  res.json({ status: 'success', data: req.body });
-});
-
-
-
+const authRoutes = require('./routes/auth.route');
+app.use('/',authRoutes)
 
 
 
