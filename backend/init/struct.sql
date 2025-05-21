@@ -1,3 +1,4 @@
+-- DEPRECADO ESTRUCUTRA DE DB
 -- Se ejecuta unicamente al cargar por primera vez el contenedor docker, de lo contrario reiniciar el volumnen com docker-compose down -v
 create table cuarteles(
 id_cuartel serial primary key,
