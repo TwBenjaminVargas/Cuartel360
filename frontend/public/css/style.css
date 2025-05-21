@@ -1,6 +1,7 @@
 :root {
   --bordo: #790000;
   --bordo2: #5e0000;
+  --bordo3: #4a0000;
 }
 .btn-rojo {
   background-color: var(--bordo);
@@ -10,9 +11,16 @@
 .btn-rojo:hover {
   background-color: var(--bordo2);
 }
+.btn-rojo:active,
+.btn-rojo:focus {
+  background-color: var(--bordo3);
+  box-shadow: none;
+  outline: none;
+}
 .input-invalido {
   border: 2px solid red;
-}
+  background-color: #ffe6e6;
+
 .navbar-bordo {
   background-color: var(--bordo) !important;
 }
