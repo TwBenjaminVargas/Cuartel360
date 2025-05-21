@@ -20,4 +20,16 @@
 .input-invalido {
   border: 2px solid red;
   background-color: #ffe6e6;
+
+.navbar-bordo {
+  background-color: var(--bordo) !important;
+}
+
+.navbar-bordo .navbar-brand,
+.navbar-bordo .nav-link {
+  color: white !important;
+}
+
+.navbar-bordo .nav-link:hover {
+  color: #dddddd !important;
 }
