@@ -49,7 +49,7 @@ module.exports =
   },
   /**
    * Valida tokens
-   * @param {String} authHeader 
+   * @param {String} authHeader cabecera de autorizacion
    * @returns token decodificado
    */
   validateToken: (authHeader) => {
