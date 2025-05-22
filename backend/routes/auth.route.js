@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const authService = require('../service/auth.service');
-
+const authMiddleware = require('../middleware/auth.middleware')
 
 
 
@@ -18,19 +18,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', (req, res) => {
    // Obtener el header Authorization
-   try {
-    const authHeader = req.headers['authorization'];
-    const tokenPayload = authService.validateToken(authHeader);
-    if(tokenPayload.id_rol == 1)
-      return res.sendFile(path.join(__dirname, '../../frontend/views/homeAdmin.html'));
-    else if (tokenPayload.id_rol == 2)
-      return res.sendFile(path.join(__dirname, '../../frontend/views/homeUser.html'));
-    else
-      return res.status(403).sendFile(path.join(__dirname, '../../frontend/views/forbidden.html'));
-  } catch (error) {
-    return res.status(401).sendFile(path.join(__dirname, '../../frontend/views/index.html'));
-  }
-
-  });
+    return res.sendFile(path.join(__dirname, '../../frontend/views/index.html'));
+});
 
 module.exports = router;
