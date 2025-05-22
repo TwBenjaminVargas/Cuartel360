@@ -12,7 +12,17 @@ app.use(express.json()); // Middleware para procesar JSON
 const authRoutes = require('./routes/auth.route');
 app.use('/',authRoutes)
 
+// Endpoint Registro
+const RegRoutes = require('./routes/registro.route');
+app.use('/',RegRoutes)
 
+// Endpoint Home Admin
+const HomAdRoutes = require('./routes/homeAdmin.route');
+app.use('/',HomAdRoutes)
+
+// Endpoint Home Admin
+const HomUsRoutes = require('./routes/homeUser.route');
+app.use('/',HomUsRoutes)
 
 app.listen(3000, () => {
   console.log('Servidor en http://localhost:3000');

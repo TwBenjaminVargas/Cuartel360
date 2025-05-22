@@ -17,7 +17,6 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', (req, res) => {
-   // Obtener el header Authorization
     return res.sendFile(path.join(__dirname, '../../frontend/views/index.html'));
 });
 
