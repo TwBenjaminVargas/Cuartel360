@@ -17,7 +17,20 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/views/index.html'));
+   // Obtener el header Authorization
+   try {
+    const authHeader = req.headers['authorization'];
+    const tokenPayload = authService.validateToken(authHeader);
+    if(tokenPayload.id_rol == 1)
+      return res.sendFile(path.join(__dirname, '../../frontend/views/homeAdmin.html'));
+    else if (tokenPayload.id_rol == 2)
+      return res.sendFile(path.join(__dirname, '../../frontend/views/homeUser.html'));
+    else
+      return res.status(403).sendFile(path.join(__dirname, '../../frontend/views/forbidden.html'));
+  } catch (error) {
+    return res.status(401).sendFile(path.join(__dirname, '../../frontend/views/index.html'));
+  }
+
   });
 
 module.exports = router;
