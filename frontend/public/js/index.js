@@ -38,6 +38,22 @@ async function login()
       if(respuesta.ok){
         console.log(resultado);
         localStorage.setItem('token', resultado.token);
+
+        const tokenPartes = resultado.token.split('.');
+        const payloadBase64 = tokenPartes[1];
+        const payloadJSON = JSON.parse(atob(payloadBase64));
+
+        const rol = payloadJSON.rol;
+
+        // Redirigir segun el rol
+        if (rol === 1) {
+          window.location.href = 'http://localhost:3000/homeAdmin';
+        } else if (rol === 2) {
+          window.location.href = 'http://localhost:3000/homeUser';
+        } else {
+          mensajeError.style.display = "block";
+          mensajeError.textContent = "Rol de usuario no válido.";
+        }
       }else{
         console.error('Error:', resultado.error);
       }
@@ -66,16 +82,6 @@ function validateInput(input)
         return true;
     }
       
-}
-
-/**
- * Acciones que realizan al recibir la respuesta del backend
- * @param answer 
- */
-function manageJSONAnswer(resultado)
-{
-  
-  console.log(resultado)
 }
 
 document.getElementById('buttonLogin').addEventListener('click', login);
