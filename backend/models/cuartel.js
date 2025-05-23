@@ -7,6 +7,10 @@ module.exports = (sequelize,DataTypes) =>
       primaryKey: true,
       autoIncrement: true
     },
+    codigo: {
+      type: DataTypes.INTEGER,
+      unique : true
+    },
     nombre: DataTypes.STRING(60),
     numero: DataTypes.INTEGER,
     email: {

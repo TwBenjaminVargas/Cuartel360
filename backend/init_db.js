@@ -5,6 +5,7 @@ async function initData() {
     const [cuartel] = await Cuartel.findOrCreate({
       where: { numero: 113 },
       defaults: {
+        codigo: 6113,
         nombre: 'Asociación Bomberos Voluntarios de La Granja',
         email: 'contacto@bomberoslagranja.com',
         telefono: 3511234567,

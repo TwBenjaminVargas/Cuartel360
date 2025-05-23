@@ -20,9 +20,35 @@ app.use('/',RegRoutes)
 const HomAdRoutes = require('./routes/homeAdmin.route');
 app.use('/',HomAdRoutes)
 
-// Endpoint Home Admin
+// Endpoint Home User
 const HomUsRoutes = require('./routes/homeUser.route');
 app.use('/',HomUsRoutes)
+
+
+// Endpoint Guardias Admin
+const GuardiasAdRoutes = require('./routes/guardiasAdmin.route');
+app.use('/',GuardiasAdRoutes)
+
+// Endpoint Guardias User
+const GuardiasUsRoutes = require('./routes/guardiasUser.route');
+app.use('/',GuardiasUsRoutes)
+
+// Endpoint Inventario Admin
+const InventarioAdRoutes = require('./routes/inventarioAdmin.route');
+app.use('/',InventarioAdRoutes)
+
+// Endpoint Inventario User
+const InventarioUsRoutes = require('./routes/inventarioUser.route');
+app.use('/',InventarioUsRoutes)
+
+// Endpoint Tareas Admin
+const TareasAdRoutes = require('./routes/tareasAdmin.route');
+app.use('/',TareasAdRoutes)
+
+// Endpoint Tareas User
+const TareasUsRoutes = require('./routes/tareasUser.route');
+app.use('/',TareasUsRoutes)
+
 
 app.listen(3000, () => {
   console.log('Servidor en http://localhost:3000');
