@@ -12,7 +12,12 @@ module.exports =
    */
   login: async (email, contraseña) => {
 
-    // Buscar usuario
+    // formato es invalido
+     if (!/\S+@\S+\.\S+/.test(email)) throw new Error('El formato del email es inválido');
+      //formato contraseña es invalido
+     if(contraseña.length <8) throw new Error('Contraseña debe tener mas de 8 caracteres');
+    
+     // Buscar usuario
     const user = await Bombero.findOne({ where: { email } });
 
     if (!user) throw new Error('Usuario no encontrado');

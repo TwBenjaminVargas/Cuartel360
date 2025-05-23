@@ -29,7 +29,8 @@ async function initData() {
       defaults: {
         contraseña: '12345678',
         dni: 12345678,
-        nombre: 'Juan Admin',
+        nombre: 'Juan',
+        apellido: 'Admin',
         rango: 'Sargento',
         id_cuartel: cuartel.id_cuartel,
         id_rol: rolAdmin.id_rol
@@ -41,7 +42,8 @@ async function initData() {
       defaults: {
         contraseña: '87654321',
         dni: 87654321,
-        nombre: 'Pedro Usuario',
+        nombre: 'Pedro',
+        apellido: 'Usuario',
         rango: 'Bombero',
         id_cuartel: cuartel.id_cuartel,
         id_rol: rolUsuario.id_rol,

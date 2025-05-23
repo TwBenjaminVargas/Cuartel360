@@ -43,6 +43,7 @@ module.exports = (sequelize,DataTypes) =>
       unique: true
     },
     nombre: DataTypes.STRING(60),
+    apellido: DataTypes.STRING(60),
     rango: DataTypes.STRING(60),
     
   }, {
