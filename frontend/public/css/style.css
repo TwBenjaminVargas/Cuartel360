@@ -3,6 +3,18 @@
   --bordo2: #5e0000;
   --bordo3: #4a0000;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1;
+}
 .btn-rojo {
   background-color: var(--bordo);
   color: white;
@@ -36,8 +48,7 @@
 
 .footer-bordo {
   background-color: var(--bordo);
-  position: relative;
-  bottom: 0;
+  color: white;
   width: 100%;
 }
 .logo-navbar {

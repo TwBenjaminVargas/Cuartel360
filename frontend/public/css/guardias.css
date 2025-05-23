@@ -1,0 +1,21 @@
+#calendario {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.fc .fc-daygrid-day-number {
+  color: var(--bordo);
+  font-weight: bold;
+}
+.fc-event {
+  background-color: var(--bordo);
+  border: none;
+  font-size: 0.85rem;
+}
+.fc .fc-col-header-cell-cushion {
+  color: var(--bordo);
+  font-weight: bold;
+}

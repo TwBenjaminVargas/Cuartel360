@@ -5,98 +5,65 @@
     <title>Mi Cuartel</title>
     <!-- Importar el CSS de Bootstrap -->
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <!-- Importar biblioteca fullcalendar -->
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/guardias.css">
+    
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg navbar-bordo">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Cuartel 360</a>
+        <a class="navbar-brand" href="#">
+            <img src="../public/img/Logo2.png" alt="Logo" class="logo-navbar me-2">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="http://localhost:3000/homeAdmin">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Guardias</a>
+            <a class="nav-link" href="http://localhost:3000/guardiasAdmin">Guardias</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Tareas</a>
+            <a class="nav-link" href="http://localhost:3000/tareasAdmin">Tareas</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Inventario</a>
+            <a class="nav-link" href="http://localhost:3000/inventarioAdmin">Inventario</a>
             <li class="nav-item">
             <a class="nav-link" href="#">Perfil</a>
             </li>
             </li>
         </ul>
+
+        <button id="logoutButton" class="btn btn-light ms-auto">Cerrar sesión</button>
         </div>
     </div>
     </nav>
 
-    <h1 class="display-4 text-center mb-4">Guardias</h1>
+    <main>
+        <h1 class="display-4 text-center mb-4">Guardias</h1>
 
-    <div class="container">
-        <table class="table table-bordered table-fixed">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Lunes</th>
-                    <th scope="col">Martes</th>
-                    <th scope="col">Miercoles</th>
-                    <th scope="col">Jueves</th>
-                    <th scope="col">Viernes</th>
-                    <th scope="col">Sabado</th>
-                    <th scope="col">Domingo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Semana 1</th>
-                    <td>Perro</td>
-                    <td>Gato</td>
-                    <td>Mono</td>
-                    <td>Jirafa</td>
-                    <td>Cebra</td>
-                    <td>Pollo</td>
-                    <td>Paloma</td>
-                </tr>
-                <tr>
-                    <th scope="row">Semana 2</th>
-                    <td>Perro</td>
-                    <td>Gato</td>
-                    <td>Mono</td>
-                    <td>Jirafa</td>
-                    <td>Cebra</td>
-                    <td>Pollo</td>
-                    <td>Paloma</td>
-                </tr>
-                <tr>
-                    <th scope="row">Semana 3</th>
-                    <td>Perro</td>
-                    <td>Gato</td>
-                    <td>Mono</td>
-                    <td>Jirafa</td>
-                    <td>Cebra</td>
-                    <td>Pollo</td>
-                    <td>Paloma</td>
-                </tr>
-                <tr>
-                    <th scope="row">Semana 4</th>
-                    <td>Perro</td>
-                    <td>Gato</td>
-                    <td>Mono</td>
-                    <td>Jirafa</td>
-                    <td>Cebra</td>
-                    <td>Pollo</td>
-                    <td>Paloma</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="container">
+            <div id="calendario"></div>
+        </div>
+    </main>
+
+    <footer class="footer-bordo text-center py-3">
+        <span class="text-white">© 2025 Cuartel 360</span>
+    </footer>
 
     <!-- Importar los scripts de Bootstrap -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FullCalendar scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/locales/es.global.min.js"></script>
+
+    <script src="../public/js/guardiasUser.js"></script>
 </body>
 </html>
