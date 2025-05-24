@@ -1,5 +1,6 @@
 const { where } = require('sequelize');
 const { Bombero,Cuartel } = require('../models'); // base de datos
+const encryptService = require('./encrypt.service');
 
 module.exports =
 {
@@ -18,7 +19,7 @@ module.exports =
      if(!cuartel) throw new Error('Condigo de cuartel invalido');
 
      const newuser = await Bombero.create({
-        email, contraseña,id_cuartel: cuartel.id_cuartel,id_rol : 2, nombre,apellido});
+        email, contraseña: encryptService.encriptar(contraseña),id_cuartel: cuartel.id_cuartel,id_rol : 2, nombre,apellido});
     if (!newuser) throw new Error('Fallo al crear usuario');
   }
 }

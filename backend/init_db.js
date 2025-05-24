@@ -1,4 +1,5 @@
 const {Cuartel,Rol,Bombero} = require('./models');
+const encryptService = require('./service/encrypt.service');
 async function initData() {
   try {
     // Crear cuartel (si no existe)
@@ -27,7 +28,7 @@ async function initData() {
     const [adminBombero] = await Bombero.findOrCreate({
       where: { email: 'admin@bomberos.com' },
       defaults: {
-        contraseña: '12345678',
+        contraseña: await encryptService.encriptar('12345678'),
         dni: 12345678,
         nombre: 'Juan',
         apellido: 'Admin',
@@ -40,7 +41,7 @@ async function initData() {
     const [usuarioBombero] = await Bombero.findOrCreate({
       where: { email: 'usuario@bomberos.com' },
       defaults: {
-        contraseña: '87654321',
+        contraseña: await encryptService.encriptar('87654321'),
         dni: 87654321,
         nombre: 'Pedro',
         apellido: 'Usuario',
