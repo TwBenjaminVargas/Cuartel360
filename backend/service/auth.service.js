@@ -1,4 +1,5 @@
 const { Bombero } = require('../models'); // base de datos
+const encryptService = require('./encrypt.service')
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../jwt');
 
@@ -23,12 +24,8 @@ module.exports =
     if (!user) throw new Error('Usuario no encontrado');
 
     // Validar contraseña
-
-    /* Se evita la encriptacion para versiones de prueba
-    const validPassword = await bcrypt.compare(contraseña, user.contraseña);
-    if (!validPassword) throw new Error('Contraseña incorrecta');
-     */
-    if (user.contraseña !== contraseña) throw new Error('Contraseña erronea');;
+    if (!encryptService.controlContraseña(contraseña,user.contraseña)) throw new Error('Contraseña incorrecta');
+  
 
 
     // Crear payload del token (sin datos sensibles)

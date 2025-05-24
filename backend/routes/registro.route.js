@@ -25,7 +25,7 @@ router.post('/registro', async (req, res) => {
     return res.status(400).json({ error: 'Datos incompatibles' });
   }
   try {
-    const result = await registerService.registerUser(email,nombre,apellido,contraseña,dni,codigo);
+    const result = await registerService.registerUser(email,nombre,apellido,dni,contraseña,codigo);
     res.status(201).json({ message: 'Usuario registrado correctamente'})
   } catch (error) {
     res.status(401).json({ error: error.message });
