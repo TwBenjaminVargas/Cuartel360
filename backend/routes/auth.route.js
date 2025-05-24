@@ -7,15 +7,14 @@ const authMiddleware = require('../middleware/auth.middleware')
 
 
 router.post('/', async (req, res) => {
-  const { email, password } = req.body;
-  
+  const { email, contraseña } = req.body;
    if (
     typeof email !== 'string' ||
     typeof contraseña !== 'string') return res.status(400).json({ error: 'Datos incompatibles' });
 
 
   try {
-    const result = await authService.login(email, password);
+    const result = await authService.login(email, contraseña);
     res.json(result);
   } catch (error) {
     res.status(401).json({ error: error.message });

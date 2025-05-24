@@ -5,6 +5,8 @@ async function registro()
 {
     emailInput = document.getElementById("emailInput")
     nameInput = document.getElementById("nameInput")
+    lastnameInput = document.getElementById("lastnameInput")
+    dniInput = document.getElementById("dniInput")
     cuartelInput = document.getElementById("cuartelInput")
     passwordInput = document.getElementById("passwordInput")
     passwordControlInput = document.getElementById("passwordControlInput")
@@ -18,8 +20,10 @@ async function registro()
     const valid3 = validateInput(cuartelInput);
     const valid4 = validateInput(passwordInput);
     const valid5 = validateInput(passwordControlInput);
+    const valid6 = validateInput(lastnameInput);
+    const valid7 = validateInput(dniInput);
 
-    const camposValidos = valid1 && valid2 && valid3 && valid4 && valid5;
+    const camposValidos = valid1 && valid2 && valid3 && valid4 && valid5 && valid6 && valid7;
 
     if (!camposValidos) {
         mensajeError.textContent = "Por favor, completá todos los campos.";
@@ -39,14 +43,15 @@ async function registro()
 
     const datos = {
         email: emailInput.value,
-        name: nameInput.value,
-        cuartel: cuartelInput.value,
-        password: passwordInput.value,
-        passwordControl: passwordControlInput.value          
+        nombre: nameInput.value,
+        apellido: lastnameInput.value,
+        dni: parseInt(dniInput.value),
+        contraseña: passwordInput.value,   
+        codigo: parseInt(cuartelInput.value)    
     };
         
     try {
-        const respuesta = await fetch('http://localhost:3000/views/registro.html', {
+        const respuesta = await fetch('http://localhost:3000/registro', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
