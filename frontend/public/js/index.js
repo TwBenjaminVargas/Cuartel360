@@ -21,7 +21,7 @@ async function login()
 
     const datos = {
       email: emailInput.value,
-      password: passwordInput.value
+      contraseña: passwordInput.value
     };
         
     try {
