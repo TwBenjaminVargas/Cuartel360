@@ -24,7 +24,6 @@ module.exports =
     if (!user) throw new Error('Usuario no encontrado');
 
     // Validar contraseña
-
     if (!encryptService.controlContraseña(contraseña,user.contraseña)) throw new Error('Contraseña incorrecta');
   
 

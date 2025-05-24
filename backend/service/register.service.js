@@ -17,9 +17,8 @@ module.exports =
 
      const cuartel = await Cuartel.findOne({where : {codigo}});
      if(!cuartel) throw new Error('Condigo de cuartel invalido');
-
      const newuser = await Bombero.create({
-        email, contraseña: encryptService.encriptar(contraseña),id_cuartel: cuartel.id_cuartel,id_rol : 2, nombre,apellido});
+        email, contraseña: await encryptService.encriptar(contraseña),id_cuartel: cuartel.id_cuartel,id_rol : 2, nombre,apellido});
     if (!newuser) throw new Error('Fallo al crear usuario');
   }
 }
