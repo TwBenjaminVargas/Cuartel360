@@ -41,9 +41,19 @@
         </div>
     </nav>
 
-    <main>
+    <main class="container mt-5">
         <h1 class="display-4 text-center mb-4">Tareas</h1>
 
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 50px;">✔</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-tareas">
+            </tbody>
+        </table>
     </main>
 
     <footer class="footer-bordo text-center py-3">
@@ -51,5 +61,6 @@
     </footer>
     <!-- Importar los scripts de Bootstrap -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/js/tareasUser.js"></script>
 </body>
 </html>
