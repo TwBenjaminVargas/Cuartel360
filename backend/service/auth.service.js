@@ -11,12 +11,12 @@ module.exports =
    * @param {String} contraseña 
    * @returns {JSON} datos de usuario y token jwt  
    */
-  login: async (email, contraseña) => {
+  login: async (email, contraseñaIn) => {
 
     // formato es invalido
      if (!/\S+@\S+\.\S+/.test(email)) throw new Error('El formato del email es inválido');
       //formato contraseña es invalido
-     if(contraseña.length <8) throw new Error('Contraseña debe tener mas de 8 caracteres');
+     if(contraseñaIn.length <8) throw new Error('Contraseña debe tener al menos 8 caracteres');
     
      // Buscar usuario
     const user = await Bombero.findOne({ where: { email } });
@@ -24,7 +24,7 @@ module.exports =
     if (!user) throw new Error('Usuario no encontrado');
 
     // Validar contraseña
-    if (!encryptService.controlContraseña(contraseña,user.contraseña)) throw new Error('Contraseña incorrecta');
+    if (!await encryptService.controlContraseña(contraseñaIn,user.contraseña)) throw new Error('Contraseña incorrecta');
   
 
 
