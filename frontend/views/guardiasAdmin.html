@@ -52,9 +52,47 @@
         <h1 class="display-4 text-center mb-4">Guardias</h1>
 
         <div class="container">
+            <div class="container text-end mb-3">
+                <button class="btn btn-primary btn-rojo" data-bs-toggle="modal" data-bs-target="#nuevaGuardiaModal">
+                    + Nueva Guardia
+                </button>
+            </div>
+
             <div id="calendario"></div>
         </div>
     </main>
+
+    <!-- Modal para nueva guardia -->
+    <div class="modal fade" id="nuevaGuardiaModal" tabindex="-1" aria-labelledby="nuevaGuardiaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form id="formNuevaGuardia">
+            <div class="modal-header">
+            <h5 class="modal-title" id="nuevaGuardiaModalLabel">Agregar Guardia</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="inicio" class="form-label">Inicio</label>
+                <input type="datetime-local" class="form-control" id="inicio" required>
+            </div>
+            <div class="mb-3">
+                <label for="fin" class="form-label">Fin</label>
+                <input type="datetime-local" class="form-control" id="fin" required>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
 
     <footer class="footer-bordo text-center py-3">
         <span class="text-white">© 2025 Cuartel 360</span>
@@ -67,6 +105,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/locales/es.global.min.js"></script>
 
-    <script src="../public/js/guardiasUser.js"></script>
+    <script src="../public/js/guardiasAdmin.js"></script>
 </body>
 </html>

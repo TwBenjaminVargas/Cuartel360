@@ -10,12 +10,66 @@
   color: var(--bordo);
   font-weight: bold;
 }
-.fc-event {
-  background-color: var(--bordo);
-  border: none;
+.fc-event,
+.fc-event * {
+  background-color: transparent !important;
+  color: black !important;
+  border: none !important;
   font-size: 0.85rem;
+  padding: 2px 4px;
 }
 .fc .fc-col-header-cell-cushion {
   color: var(--bordo);
   font-weight: bold;
+}
+.fc-event-time {
+  font-weight: normal !important;
+  color: black !important;
+}
+.fc-event-title {
+  font-weight: bold !important;
+  color: black !important;
+}
+.fc .fc-daygrid-event {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.fc .fc-daygrid-event-harness {  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+.fc .fc-daygrid-event-dot {
+  display: none !important; 
+}
+.fc .fc-daygrid-event.fc-daygrid-block-event {
+  min-height: 1.2em !important;  /* o 0, según cómo quieras */
+  line-height: 1.2 !important;
+  height: auto !important;
+}
+
+/* Elimina fondo, margen y espacio de todos los eventos */
+.fc .fc-daygrid-event,
+.fc .fc-daygrid-event-harness,
+.fc .fc-event,
+.fc-event {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  line-height: 1.2 !important;
+  display: inline !important;
+  color: black !important;
+  font-weight: normal !important;
+}
+
+/* Elimina puntito decorativo */
+.fc .fc-daygrid-event-dot {
+  display: none !important;
 }
