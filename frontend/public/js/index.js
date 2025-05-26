@@ -56,6 +56,8 @@ async function login()
         }
       }else{
         console.error('Error:', resultado.error);
+        mensajeError.style.display = "block";
+        mensajeError.textContent = resultado.error || "Email o contraseña incorrectos.";
       }
 
     } catch (error) {
