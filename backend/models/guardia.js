@@ -1,22 +1,25 @@
 // models/Guardia.js
-module.exports = (sequelize,DataTypes) =>
-{
+module.exports = (sequelize, DataTypes) => {
   const Guardia = sequelize.define('Guardia', {
     id_guardia: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    fecha_inicio: DataTypes.DATEONLY,
-    fecha_fin: DataTypes.DATEONLY,
-    hora_inicio: DataTypes.TIME,
-    hora_fin: DataTypes.TIME
+    start: DataTypes.DATE, // Fecha y hora de inicio
+    end: DataTypes.DATE,   // Fecha y hora de fin
+    id_bombero: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'bomberos',
+        key: 'id_bombero'
+      }
+    }
   }, {
     tableName: 'guardias',
     timestamps: false
   });
-  
-  
+
   return Guardia;
-  
-}
+};

@@ -1,5 +1,19 @@
-const {Cuartel,Rol,Bombero} = require('./models');
+const { Cuartel, Rol, Bombero, Guardia } = require('./models');
 const encryptService = require('./service/encrypt.service');
+
+const TURNOS = [
+  { inicio: 7, fin: 14 },
+  { inicio: 14, fin: 21 },
+  { inicio: 21, fin: 7 }
+];
+
+function setHour(date, hour) {
+  const newDate = new Date(date);
+  newDate.setHours(hour, 0, 0, 0);
+  return newDate;
+}
+
+
 async function initData() {
   try {
     // Crear cuartel (si no existe)
@@ -52,6 +66,35 @@ async function initData() {
       }
     });
 
+    let fecha = new Date(2025, 0, 1); // 1 enero 2025, 00:00
+    const fin = new Date(2025, 11, 31); // 31 diciembre 2025
+
+    while (fecha <= fin) {
+      for (const turno of TURNOS) {
+        const start = setHour(fecha, turno.inicio);
+        let end;
+
+        if (turno.fin > turno.inicio) {
+          end = setHour(fecha, turno.fin);
+        } else {
+          // Turno nocturno que cruza al día siguiente
+          const diaSiguiente = new Date(fecha);
+          diaSiguiente.setDate(diaSiguiente.getDate() + 1);
+          end = setHour(diaSiguiente, turno.fin);
+        }
+
+        await Guardia.create({
+          start,
+          end,
+          id_bombero: 2
+        });
+      }
+      // Avanzar al día siguiente para el próximo ciclo
+      fecha.setDate(fecha.getDate() + 1);
+    }
+
+    console.log('Guardias continuas insertadas para todo el año 2025');
+
     console.log('Datos de prueba cargados correctamente.');
     process.exit();
   } catch (error) {
@@ -60,3 +103,4 @@ async function initData() {
   }
 }
 initData();
+
