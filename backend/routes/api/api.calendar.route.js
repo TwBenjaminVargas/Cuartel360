@@ -17,24 +17,24 @@ router.post('/api/guardias', async (req, res) =>
     if (typeof email !== 'string' ||
         typeof start !== 'string' ||
         typeof end !== 'string') 
-        res.status(400).json({ error: 'Datos incompatibles' });
+        return res.status(400).json({ error: 'Datos incompatibles' });
     
     const startDate = new Date(start);
     const endDate = new Date(end);
 
     if (isNaN(startDate.getTime()) ||
         isNaN(endDate.getTime()))
-        res.status(400).json({ error: 'Formato de fecha invalido' });
+        return res.status(400).json({ error: 'Formato de fecha invalido' });
 
     try 
     {
         await calendarService.añadirGuardia(email,startDate,endDate);
-        res.status(201).json({ message: 'Guardia registrada'})
+        return res.status(201).json({ message: 'Guardia registrada'})
 
     } 
     catch (error)
     {
-        res.status(401).json({ error: error.message });
+        return res.status(401).json({ error: error.message });
     }
 
 });
