@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('formNuevaGuardia').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
     const inicio = document.getElementById('inicio').value;
     const fin = document.getElementById('fin').value;
 
     const nuevaGuardia = {
-      nombre: nombre,
-      inicio: inicio,
-      fin: fin
+      email: email,
+      start: inicio,
+      end: fin
     };
 
     fetch('/api/guardias', {
