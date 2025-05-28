@@ -1,4 +1,5 @@
-const { Cuartel, Rol, Bombero, Guardia } = require('./models');
+const { Cuartel, Rol, Bombero, Guardia, Estado, Tarea } = require('./models');
+const estado = require('./models/estado');
 const encryptService = require('./service/encrypt.service');
 
 const TURNOS = [
@@ -66,6 +67,14 @@ async function initData() {
       }
     });
 
+    //tareas
+    const tarea1 = await Tarea.create(
+    {
+      id_bombero: usuarioBombero.id_bombero,
+      descripcion: 'Revisar equipo de respiración',
+      estado: 0
+    });
+
     let fecha = new Date(2025, 0, 1); // 1 enero 2025, 00:00
     const fin = new Date(2025, 11, 31); // 31 diciembre 2025
 
@@ -86,7 +95,7 @@ async function initData() {
         await Guardia.create({
           start,
           end,
-          id_bombero: 2
+          id_bombero: usuarioBombero.id_bombero
         });
       }
       // Avanzar al día siguiente para el próximo ciclo

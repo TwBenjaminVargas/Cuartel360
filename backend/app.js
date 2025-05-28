@@ -10,7 +10,10 @@ app.use(express.json()); // Middleware para procesar JSON
 
 //APIS
 const apiCalendar = require('./routes/api/api.calendar.route');
-app.use('/',apiCalendar)
+app.use('/',apiCalendar);
+
+const apiTareas = require('./routes/api/api.tareas.route');
+app.use('/',apiTareas);
 
 // Endpoint Login
 const authRoutes = require('./routes/auth.route');
