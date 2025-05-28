@@ -20,6 +20,12 @@ module.exports =
     {
         const [update] = await Tarea.update({ estado },{ where: { id_tarea} });
         if(update === 0) throw new Error(`Error al actualizar estado de tarea ${id_tarea}`);
-    }
+    },
+    registrarTarea : async (descripcion) =>
+    {
+        const tarea = await Tarea.create({descripcion,estado:0});
+        if(!tarea) throw new Error("Error al crear tarea");
+    },
+    
     
 }
