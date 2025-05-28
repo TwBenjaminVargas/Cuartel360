@@ -48,6 +48,20 @@
     <main>
         <h1 class="display-4 text-center mb-4">Inventario</h1>
 
+        <div class="container">
+            <table class="table table-striped" id="tabla-inventario">
+            <thead>
+                <tr>
+                <th>Propietario</th>
+                <th>Elemento</th>
+                <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Acá se insertarán las filas dinámicamente -->
+            </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="footer-bordo text-center py-3">
@@ -56,5 +70,6 @@
 
     <!-- Importar los scripts de Bootstrap -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/js/inventarioAdmin.js"></script>
 </body>
 </html>
