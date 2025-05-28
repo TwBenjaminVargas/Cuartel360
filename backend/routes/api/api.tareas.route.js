@@ -1,0 +1,34 @@
+const express = require('express');
+const path = require('path');
+const tareasService = require('../../service/tareas.service');
+const router = express.Router();
+
+
+router.get('/api/tareas', async (req, res) => {
+    res.json(await tareasService.getListaTareas());
+
+});
+
+router.put("/api/tareas/:id", async (req, res) => 
+{
+    const id_tarea = Number(req.params.id);
+    const estado = Number(req.body.estado);
+
+    if (isNaN(id_tarea) || isNaN(estado)) {
+        return res.status(400).json({ error: 'ID o estado inválidos.' });
+    }
+    try 
+    {
+        await tareasService.actualizarEstadoTarea(id_tarea,estado);
+        res.status(200).json({ mensaje: 'Tarea actualizada correctamente.' });
+
+    } catch (error)
+    {
+        console.error("Error al actualizar la tarea:", error);
+        return res.status(500).json({ error});
+    }
+});
+
+//router.post('/api/tareas', async (req, res) => {});
+
+module.exports = router;
