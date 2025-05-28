@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Cuartel</title>
+    <link rel="icon" type="image/png" href="../public/img/favicon.png">
     <!-- Importar el CSS de Bootstrap -->
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/style.css">
@@ -46,6 +47,16 @@
 
     <main class="container mt-5">
         <h1 class="display-4 text-center mb-4">Tareas</h1>
+
+        <div class="mb-4">
+            <div class="input-group">
+                <input type="text" id="descripcion-tarea" class="form-control" placeholder="Nueva tarea...">
+                <button id="btn-agregar-tarea" class="btn btn-primary">Agregar</button>
+            </div>
+            <div class="alert alert-danger mt-2 d-none" id="alerta-vacia">
+                La descripción no puede estar vacía.
+            </div>
+        </div>
 
         <table class="table table-bordered table-hover">
             <thead class="table-dark">

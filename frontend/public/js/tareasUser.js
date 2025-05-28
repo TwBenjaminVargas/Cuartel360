@@ -10,10 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Crear checkbox
                 const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
-                checkbox.checked = tarea.realizada;
+                checkbox.checked = tarea.estado === 1;
                 checkbox.classList.add("form-check-input");
                 checkbox.addEventListener("change", () => {
-                    actualizarEstadoTarea(tarea.id, checkbox.checked);
+                    const nuevoEstado = checkbox.checked ? 1 : 0;
+                    actualizarEstadoTarea(tarea.id_tarea, nuevoEstado);
                 });
 
                 // Crear celdas
@@ -36,13 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function actualizarEstadoTarea(id, realizada) {
+function actualizarEstadoTarea(id, estado) {
     fetch(`http://localhost:3000/api/tareas/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ realizada }),
+        body: JSON.stringify({ estado }),
     })
     .then(response => {
         if (!response.ok) {

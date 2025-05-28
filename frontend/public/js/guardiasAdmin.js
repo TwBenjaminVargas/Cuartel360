@@ -64,20 +64,33 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify(nuevaGuardia)
     })
-    .then(response => {
-      if (!response.ok) throw new Error('Error al agregar guardia');
-      return response.json();
-    })
-    .then(data => {
-      // Cerrar modal y recargar eventos
+    .then(async response => {
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data.error === 'Email invalido') {
+          document.getElementById('error-email').classList.remove('d-none');
+        } else {
+          alert(data.error || 'Error desconocido al agregar guardia');
+        }
+        throw new Error(data.error);
+      }
+
+      // exito: oculta error y actualiza
+      document.getElementById('error-email').classList.add('d-none');
+
       const modal = bootstrap.Modal.getInstance(document.getElementById('nuevaGuardiaModal'));
       modal.hide();
       calendar.refetchEvents(); // Recarga el calendario
     })
     .catch(error => {
       console.error(error);
-      alert('Hubo un error al guardar la guardia');
     });
+
+  });
+
+  document.getElementById('email').addEventListener('input', () => {
+    document.getElementById('error-email').classList.add('d-none');
   });
 
 });
