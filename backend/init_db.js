@@ -1,4 +1,4 @@
-const { Cuartel, Rol, Bombero, Guardia, Estado, Tarea } = require('./models');
+const { Cuartel, Rol, Bombero, Guardia, Estado, Tarea, InventarioPersonal, Elemento } = require('./models');
 const estado = require('./models/estado');
 const encryptService = require('./service/encrypt.service');
 
@@ -74,7 +74,26 @@ async function initData() {
       descripcion: 'Revisar equipo de respiración',
       estado: 0
     });
-
+    //estado
+    const estado1 = await Estado.create(
+    {
+      nombre : 'Sano'
+    });
+    //elemento
+    const elemento = await Elemento.create(
+    {
+      nombre : 'Casco',
+      descripcion:'EPP para cabeza'
+    });
+    //inventario
+    const inventario = await InventarioPersonal.create(
+    {
+      id_bombero: usuarioBombero.id_bombero,
+      id_cuartel: 1,
+      id_estado : 1,
+      id_elemento : 1,
+    });
+    // guardias
     let fecha = new Date(2025, 0, 1); // 1 enero 2025, 00:00
     const fin = new Date(2025, 11, 31); // 31 diciembre 2025
 
