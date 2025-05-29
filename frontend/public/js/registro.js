@@ -92,8 +92,24 @@ function validateInput(input)
  */
 function manageJSONAnswer(resultado)
 {
-  
-  console.log(resultado)
+    const mensajeError = document.getElementById("mensajeError");
+    const mensajeExito = document.getElementById("mensajeExito");
+
+    if (resultado.error) {
+        mensajeError.textContent = resultado.error;
+        mensajeError.style.display = "block";
+        mensajeExito.style.display = "none";
+        return;
+    }
+
+    mensajeError.style.display = "none";
+    mensajeExito.textContent = "¡Registro exitoso! Redirigiendo al login...";
+    mensajeExito.style.display = "block";
+
+    //redirige al login
+    setTimeout(() => {
+        window.location.href = "http://localhost:3000/";  
+    }, 3000);
 }
 
 document.getElementById('buttonRegistro').addEventListener('click', registro);
