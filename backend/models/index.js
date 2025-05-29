@@ -32,13 +32,14 @@ Tarea.belongsTo(Bombero, { foreignKey: 'id_bombero' });
 Bombero.hasMany(Tarea, { foreignKey: 'id_bombero' });
 
 // InventarioPersonal -> Bombero, Elemento, Estado
+InventarioPersonal.belongsTo(Cuartel, { foreignKey: 'id_cuartel' });
 InventarioPersonal.belongsTo(Bombero, { foreignKey: 'id_bombero' });
-InventarioPersonal.belongsTo(Elemento, { foreignKey: 'id_elemento' });
-InventarioPersonal.belongsTo(Estado, { foreignKey: 'id_estado' });
+InventarioPersonal.hasMany(Elemento, { foreignKey: 'id_elemento' });
+InventarioPersonal.hasMany(Estado, { foreignKey: 'id_estado' });
 
 Bombero.hasMany(InventarioPersonal, { foreignKey: 'id_bombero' });
-Elemento.hasMany(InventarioPersonal, { foreignKey: 'id_elemento' });
-Estado.hasMany(InventarioPersonal, { foreignKey: 'id_estado' });
+Elemento.belongsTo(InventarioPersonal, { foreignKey: 'id_elemento' });
+Estado.belongsTo(InventarioPersonal, { foreignKey: 'id_estado' });
 
 // Guardia -> Bombero
 Guardia.belongsTo(Bombero, { foreignKey: 'id_bombero' });
