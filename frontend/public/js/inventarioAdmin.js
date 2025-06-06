@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('/api/inventario')
+  const codigoCuartel = 6113;
+
+  fetch(`/api/inventarioAdmin?codigoCuartel=${codigoCuartel}`)
     .then(response => {
       if (!response.ok) throw new Error('Error al obtener el inventario');
       return response.json();
     })
     .then(data => {
+      if (data.mensaje) {
+        console.warn('Mensaje del servidor:', data.mensaje); 
+        return;
+      }
+
       const tbody = document.querySelector('#tabla-inventario tbody');
       tbody.innerHTML = ''; 
 
@@ -12,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tr = document.createElement('tr');
 
         const tdPropietario = document.createElement('td');
-        tdPropietario.textContent = item.propietario;
+        tdPropietario.textContent = item.nombre;
 
         const tdElemento = document.createElement('td');
         tdElemento.textContent = item.elemento;
@@ -28,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     })
     .catch(error => {
-      console.error(error);
-      alert('No se pudo cargar el inventario');
+      console.error('Error al obtener inventario:', error);
     });
 });
