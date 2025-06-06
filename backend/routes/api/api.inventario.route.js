@@ -9,7 +9,7 @@ const router = express.Router();
  */
 router.get('/api/inventarioAdmin', async (req, res) =>
 {
-    const codigoCuartel = Number(req.body.codigoCuartel);
+    const codigoCuartel = Number(req.query.codigoCuartel);
     if (isNaN(codigoCuartel)) return res.status(400).json({ error: 'Dato invalido' });
     try
     {
