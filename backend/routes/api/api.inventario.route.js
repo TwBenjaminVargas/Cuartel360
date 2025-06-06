@@ -29,7 +29,7 @@ router.get('/api/inventarioAdmin', async (req, res) =>
  */
 router.get('/api/inventarioUsuario', async (req, res) =>
 {
-    const id_bombero = Number(req.body.id_bombero);
+    const id_bombero = Number(req.query.id_bombero);
     if (isNaN(id_bombero)) return res.status(400).json({ error: 'Dato invalido' });
     try
     {
