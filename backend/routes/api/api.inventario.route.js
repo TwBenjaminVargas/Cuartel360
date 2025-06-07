@@ -30,11 +30,11 @@ router.get('/api/inventarioAdmin',authMiddleware(1),async (req, res) =>
  */
 router.get('/api/inventarioUsuario',authMiddleware(2), async (req, res) =>
 {
-    const id_bombero = Number(req.query.id_bombero);
-    if (isNaN(id_bombero)) return res.status(400).json({ error: 'Dato invalido' });
+    const email = req.query.email;
+    if (typeof email !== "string") return res.status(400).json({ error: 'Dato invalido' });
     try
     {
-        const inventario = await inventarioService.getInventarioPersonal(id_bombero);
+        const inventario = await inventarioService.getInventarioPersonal(email);
         if(inventario.length < 1) return res.status(200).json({ mensaje: 'No se encontraron registros' });
         return res.json(inventario);
     }

@@ -31,12 +31,12 @@ module.exports =
     },
     /**
      * Obtiene el inventario completo de un bombero
-     * @param {Number} id_bombero
+     * @param {string} email
      * @returns inventario del bombero
      */
-    getInventarioPersonal: async (id_bombero) =>
+    getInventarioPersonal: async (email) =>
     {
-        const bombero = await Bombero.findOne({where:{id_bombero}});
+        const bombero = await Bombero.findOne({where:{email}});
         if(!bombero) throw new Error('Bombero no encontrado');
         const elementos = await InventarioPersonal.findAll( {where : {id_bombero}});
         const inventario = await Promise.all(elementos.map(async(elemento) =>

@@ -1,7 +1,8 @@
-const { Bombero } = require('../models'); // base de datos
+const { Bombero, Cuartel } = require('../models'); // base de datos
 const encryptService = require('./encrypt.service')
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../jwt');
+const { where } = require('sequelize');
 
 module.exports =
 {
@@ -25,14 +26,15 @@ module.exports =
 
     // Validar contraseña
     if (!await encryptService.controlContraseña(contraseñaIn,user.contraseña)) throw new Error('Contraseña incorrecta');
-  
 
+    const cuartel = await Cuartel.findOne({where:{id_cuartel : user.id_cuartel}});
 
     // Crear payload del token (sin datos sensibles)
     const payload = {
       id: user.id_bombero,
       email: user.email,
-      rol: user.id_rol
+      rol: user.id_rol,
+      codigo: cuartel.codigo
     };
 
     //Generar token
