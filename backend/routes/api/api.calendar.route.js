@@ -1,16 +1,17 @@
 const express = require('express');
 const path = require('path');
 const calendarService = require('../../service/calendar.service');
+const authMiddleware = require('../../middleware/auth.middleware');
 const router = express.Router();
 
 
-router.get('/api/guardias', async (req, res) =>
+router.get('/api/guardias',authMiddleware(2), async (req, res) =>
 {
     res.json(await calendarService.getGrillaGuardia());
 
 });
 
-router.post('/api/guardias', async (req, res) => 
+router.post('/api/guardias',authMiddleware(1), async (req, res) => 
 {
     const { email, start, end } = req.body;
     

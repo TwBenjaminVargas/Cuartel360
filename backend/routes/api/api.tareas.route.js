@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('path');
 const tareasService = require('../../service/tareas.service');
+const authMiddleware = require('../../middleware/auth.middleware');
 const router = express.Router();
 
 
-router.get('/api/tareas', async (req, res) => {
+router.get('/api/tareas',authMiddleware(2), async (req, res) => {
     res.json(await tareasService.getListaTareas());
 
 });
 
-router.put("/api/tareas/:id", async (req, res) => {
+router.put("/api/tareas/:id",authMiddleware(2), async (req, res) => {
     const id_tarea = Number(req.params.id);
     const estado = Number(req.body.estado);
 
@@ -26,7 +27,7 @@ router.put("/api/tareas/:id", async (req, res) => {
     }
 });
 
-router.post('/api/tareas', async (req, res) =>
+router.post('/api/tareas',authMiddleware(1), async (req, res) =>
 {
     const descripcion = req.body.descripcion;
     if (typeof descripcion !== 'string') return res.status(400).json({ error: 'Datos incompatibles' });
