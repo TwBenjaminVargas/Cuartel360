@@ -15,6 +15,20 @@
     <main>
         <h1 class="display-4 text-center mb-4">Inventario</h1>
 
+        <div class="container">
+            <table class="table table-striped" id="tabla-inventario">
+            <thead>
+                <tr>
+                <th>Propietario</th>
+                <th>Elemento</th>
+                <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- se insertan las filas dinamicamente -->
+            </tbody>
+            </table>
+        </div>
     </main>
 
     <div id="footer"></div>
@@ -22,6 +36,7 @@
     <!-- scripts de Bootstrap -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- scripts -->
+     <script src="../public/js/inventarioUser.js"></script>
     <script src="../public/js/componentLoader.js"></script>
     <script>
         Promise.all([
