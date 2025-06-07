@@ -38,7 +38,7 @@ module.exports =
     {
         const bombero = await Bombero.findOne({where:{email}});
         if(!bombero) throw new Error('Bombero no encontrado');
-        const elementos = await InventarioPersonal.findAll( {where : {id_bombero}});
+        const elementos = await InventarioPersonal.findAll( {where : {id_bombero:bombero.id_bombero}});
         const inventario = await Promise.all(elementos.map(async(elemento) =>
         {
             const articulo = await Elemento.findOne({where : {id_elemento : elemento.id_elemento}});
