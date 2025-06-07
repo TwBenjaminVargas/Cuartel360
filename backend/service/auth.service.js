@@ -46,7 +46,8 @@ module.exports =
         id: user.id_bombero,
         email: user.email,
         rol: user.id_rol,
-        nombre: user.nombre
+        nombre: user.nombre,
+        codigo: cuartel.codigo
       },
       token
     };
