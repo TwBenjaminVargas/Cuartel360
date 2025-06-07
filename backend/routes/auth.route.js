@@ -15,7 +15,12 @@ router.post('/', async (req, res) => {
 
   try {
     const result = await authService.login(email, contraseña);
-    res.json(result);
+    res.cookie('token', result.token, {
+      httpOnly: true,
+      secure: false,  // en producción poner true si usas https
+      sameSite: 'lax'
+    });
+    return res.json(result.user);
   } catch (error) {
     res.status(401).json({ error: error.message });
   }

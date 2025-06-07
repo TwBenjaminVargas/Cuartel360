@@ -51,23 +51,14 @@ module.exports =
   },
   /**
    * Valida tokens
-   * @param {String} authHeader cabecera de autorizacion
+   * @param {String} token
    * @returns token decodificado
    */
-  validateToken: (authHeader) => {
+  validateToken: (token) => {
 
-    if (!authHeader) {
-      throw new Error('No se encontró el token en el header Authorization');
+    if (!token) {
+      throw new Error('No se encontró el token');
     }
-
-    // authHeader tiene formato "Bearer <token>"
-    const parts = authHeader.split(' ');
-    if (parts.length !== 2 || parts[0] !== 'Bearer') {
-      throw new Error('Formato de token inválido');
-    }
-
-    const token = parts[1];
-
     try {
       // Verifica y decodifica el token con la clave secreta
       const decoded = jwt.verify(token, jwtConfig.secret);

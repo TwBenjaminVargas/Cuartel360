@@ -1,12 +1,14 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 
 // Configuracion el middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use(express.json()); // Middleware para procesar JSON
+app.use(cookieParser()); // Middleware para procesar Cookies
 
 //APIS
 const apiCalendar = require('./routes/api/api.calendar.route');

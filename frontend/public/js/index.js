@@ -36,19 +36,10 @@ async function login()
       const resultado = await respuesta.json();
 
       if(respuesta.ok){
-        console.log(resultado);
-        localStorage.setItem('token', resultado.token);
-
-        const tokenPartes = resultado.token.split('.');
-        const payloadBase64 = tokenPartes[1];
-        const payloadJSON = JSON.parse(atob(payloadBase64));
-
-        const rol = payloadJSON.rol;
-
         // Redirigir segun el rol
-        if (rol === 1) {
+        if (resultado.rol === 1) {
           window.location.href = 'http://localhost:3000/homeAdmin';
-        } else if (rol === 2) {
+        } else if (resultado.rol === 2) {
           window.location.href = 'http://localhost:3000/homeUser';
         } else {
           mensajeError.style.display = "block";

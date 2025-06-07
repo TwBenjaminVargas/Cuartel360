@@ -2,12 +2,13 @@ const express = require('express');
 const path = require('path');
 const inventarioService = require('../../service/inventario.service');
 const { error } = require('console');
+const authMiddleware = require('../../middleware/auth.middleware');
 const router = express.Router();
 
 /**
  * Endpoint vista de administrador, espera el codigo del cuartel
  */
-router.get('/api/inventarioAdmin', async (req, res) =>
+router.get('/api/inventarioAdmin',authMiddleware(1),async (req, res) =>
 {
     const codigoCuartel = Number(req.query.codigoCuartel);
     if (isNaN(codigoCuartel)) return res.status(400).json({ error: 'Dato invalido' });
@@ -27,7 +28,7 @@ router.get('/api/inventarioAdmin', async (req, res) =>
 /**
  * Endpoint vista usuario espera el id del bombero
  */
-router.get('/api/inventarioUsuario', async (req, res) =>
+router.get('/api/inventarioUsuario',authMiddleware(2), async (req, res) =>
 {
     const id_bombero = Number(req.query.id_bombero);
     if (isNaN(id_bombero)) return res.status(400).json({ error: 'Dato invalido' });
@@ -47,7 +48,7 @@ router.get('/api/inventarioUsuario', async (req, res) =>
 /**
  * Endpoint que retorna los elementos posibles
  */
-router.get('/api/inventario/elementos', async (req, res) => 
+router.get('/api/inventario/elementos',authMiddleware(1), async (req, res) => 
 {
     const elementos = await inventarioService.getListaElementos();
     if(elementos.length < 1) return res.status(200).json({ mensaje: 'No se encontraron registros' });
@@ -58,7 +59,7 @@ router.get('/api/inventario/elementos', async (req, res) =>
  * Endpoint que agrega inventarios
  * Espera el email del bombero, el id del estado y del elemento
  */
-router.post('/api/inventarioAdmin', async (req, res) => 
+router.post('/api/inventarioAdmin',authMiddleware(1), async (req, res) => 
 {
     const email = req.body.email;
     const id_estado = Number(req.body.id_estado)
@@ -86,7 +87,7 @@ router.post('/api/inventarioAdmin', async (req, res) =>
  * Endpoint que agrega elementos posibles
  * Espera un nombre y una descripcion
  */
-router.post('/api/inventario/elementos', async (req, res) => 
+router.post('/api/inventario/elementos',authMiddleware(1), async (req, res) => 
 {
     const {nombre, descripcion} = req.body;
     if (typeof descripcion !== 'string' ||
@@ -110,7 +111,7 @@ router.post('/api/inventario/elementos', async (req, res) =>
 /**
  * Endpoint que retorna los estados posibles
  */
-router.get('/api/inventario/estados', async (req, res) => 
+router.get('/api/inventario/estados',authMiddleware(2), async (req, res) => 
 {
     const estados = await inventarioService.getListaEstados();
     if(estados.length < 1) return res.status(200).json({ mensaje: 'No se encontraron registros' });
@@ -121,7 +122,7 @@ router.get('/api/inventario/estados', async (req, res) =>
  * Endpoint que agrega estados posibles
  * Espera un nombre del estado
  */
-router.post('/api/inventario/estados', async (req, res) => 
+router.post('/api/inventario/estados',authMiddleware(1), async (req, res) => 
 {
     const nombre = req.body.nombre;
     if (typeof nombre !== 'string')
@@ -145,7 +146,7 @@ router.post('/api/inventario/estados', async (req, res) =>
  * Requiere el id del inventario y el id del nuevo estado
  * Si el estado no cambia es ignorado
  */
-router.put("/api/inventario/estado/:id", async (req, res) => {
+router.put("/api/inventario/estado/:id",authMiddleware(2), async (req, res) => {
     
     const id_inventario = Number(req.params.id);
     const nuevo_estado = Number(req.body.id_estado);

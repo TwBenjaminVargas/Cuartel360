@@ -1,18 +1,16 @@
 const authService = require('../service/auth.service')
-const authMiddleware = (requiredRole = null) => {
+const authMiddleware = (rol) => {
     return async (req, res, next) => {
         try {
-            const authHeader = req.headers['authorization'];
-            const tokenPayload = await authService.validateToken(authHeader);
-
-            if (requiredRole !== null && tokenPayload.id_rol !== requiredRole)
-                return res.status(403).send('Acceso denegado');
-
+            const token = req.cookies.token;
+            const tokenPayload = await authService.validateToken(token);
+            if(tokenPayload.rol > rol)
+                return res.status(401).json({ error: 'Rol no autorizado' });
             next();
         } catch (error) {
             // problemas con los tokens
-            console.log(error);
-            return res.status(401).sendFile(path.join(__dirname, '../../frontend/views/index.html'));;
+            console.log('Se notifico lo siguiente al cliente: \n',error.message);
+            return res.status(401).json({ error:error.message});
         }
     };
 };
