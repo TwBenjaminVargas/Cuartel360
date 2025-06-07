@@ -16,6 +16,12 @@
         <h1 class="display-4 text-center mb-4">Inventario</h1>
 
         <div class="container">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoElementoModal">
+                Nuevo asignacion
+            </button>
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#nuevoTipoElementoModal">
+                Nuevo elemento
+            </button>
             <table class="table table-striped" id="tabla-inventario">
             <thead>
                 <tr>
@@ -25,11 +31,71 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Acá se insertarán las filas dinámicamente -->
+                <!-- se insertan las filas dinamicamente -->
             </tbody>
             </table>
         </div>
     </main>
+
+    <!-- Modal para registrar nueva asignacion -->
+    <div class="modal fade" id="nuevoElementoModal" tabindex="-1" aria-labelledby="nuevoElementoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="nuevoElementoLabel">Registrar nueva asignacion</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+            <form id="formNuevoElemento">
+            <div class="mb-3">
+                <label for="emailElemento" class="form-label">Email de propietario</label>
+                <input type="text" class="form-control" id="emailElemento" required>
+            </div>
+            <div class="mb-3">
+              <label for="elementoSelect" class="form-label">Elemento</label>
+              <select class="form-select" id="elementoSelect" required>
+                <option value="" disabled selected>Seleccione un elemento</option>
+                <!-- se carga desde /api/inventario/elementos -->
+              </select>
+            </div>
+            <div class="mb-3">
+                <label for="estadoSelect" class="form-label">Estado</label>
+                <select class="form-select" id="estadoSelect" required>
+                    <option value="" disabled selected>Seleccione un estado</option>
+                    <!-- se cargan los estados -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Modal para registrar nuevo elemento -->
+    <div class="modal fade" id="nuevoTipoElementoModal" tabindex="-1" aria-labelledby="nuevoTipoElementoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="nuevoTipoElementoLabel">Registrar nuevo elemento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+            <form id="formNuevoTipoElemento">
+            <div class="mb-3">
+                <label for="nombreElemento" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreElemento" required>
+            </div>
+            <div class="mb-3">
+                <label for="descripcionElemento" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcionElemento" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
 
     <div id="footer"></div>
 
