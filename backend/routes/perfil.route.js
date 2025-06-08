@@ -12,12 +12,25 @@ router.get('/perfilUser',authMiddleware(2),(req, res) => {
 /**
  * Espera un email y devuelve la informacion segun el rol
  */
-router.get('/perfilUser/Data',authMiddleware(2), async (req, res) => {
+router.get('/perfilUser/data',authMiddleware(2), async (req, res) => {
     email = req.query.email
     if(typeof email !== "string") return res.status(400).json({ error: 'Dato invalido' });
     try
     {
         datos = await userDataService.showUserData(email);
+        return res.json(datos);
+    }
+    catch (error)
+    {
+        return res.status(401).json({ error: error.message });
+    }   
+});
+router.get('/perfilAdmin/data',authMiddleware(1), async (req, res) => {
+    email = req.query.email
+    if(typeof email !== "string") return res.status(400).json({ error: 'Dato invalido' });
+    try
+    {
+        datos = await userDataService.showAdminData(email);
         return res.json(datos);
     }
     catch (error)

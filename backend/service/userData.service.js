@@ -7,10 +7,39 @@ module.exports =
 /**
  * Muestra los datos del usuario
  * @param {String} email
- * @returns datos del usuario, y si es un administrador devolvera
- * ademas los datos de los subordinados.
+ * @returns datos del usuario
  */
   showUserData: async (email) => {
+    const usuario = await Bombero.findOne({where:{email}});
+    if (!usuario) throw new Error("Usuario no encontrado");
+    const cuartel = await Cuartel.findOne({where:{id_cuartel:usuario.id_cuartel}});
+    if(usuario.id_superior !== null) // es usuario
+    {
+        const superior = await Bombero.findOne({where:{id_bombero : usuario.id_superior}});
+        return {
+            //datos del usuario
+            email: usuario.email,
+            dni : usuario.dni,
+            nombre : usuario.nombre,
+            apellido: usuario.apellido,
+            rango : usuario. rango,
+            //datos del superior
+            superior_email:superior.email,
+            superior_nombre: superior.nombre,
+            superior_apellido: superior.apellido,
+            superior_rango: superior.rango,
+            //datos del cuartel
+            cuartel_nombre:cuartel.nombre,
+            cuartel_email:cuartel.email,
+            cuartel_telefono:cuartel.telefono
+
+        };
+
+    }
+    else
+    throw new Error("Correo pertenece a un administrador")
+  },
+  showAdminData: async (email) => {
     const usuario = await Bombero.findOne({where:{email}});
     if (!usuario) throw new Error("Usuario no encontrado");
     const cuartel = await Cuartel.findOne({where:{id_cuartel:usuario.id_cuartel}});
@@ -38,28 +67,8 @@ module.exports =
         };
 
     }
-    else //es usuario
-    {
-        const superior = await Bombero.findOne({where:{id_bombero : usuario.id_superior}});
-        return {
-            //datos del usuario
-            email: usuario.email,
-            dni : usuario.dni,
-            nombre : usuario.nombre,
-            apellido: usuario.apellido,
-            rango : usuario. rango,
-            //datos del superior
-            superior_email:superior.email,
-            superior_nombre: superior.nombre,
-            superior_apellido: superior.apellido,
-            superior_rango: superior.rango,
-            //datos del cuartel
-            cuartel_nombre:cuartel.nombre,
-            cuartel_email:cuartel.email,
-            cuartel_telefono:cuartel.telefono
-
-        };
-
-    }
+    else //no es administrador
+    throw new Error("El correo provisto no es administrador");
   }
+
 }
