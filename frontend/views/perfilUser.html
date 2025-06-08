@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Cuartel</title>
+    <link rel="icon" type="image/png" href="../public/img/favicon.png">
+    <!-- CSS de Bootstrap -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="container mt-5">
+        <h1 class="display-4 text-center mb-4">Perfil</h1>
+
+        <!-- Card con datos del usuario -->
+        <div id="user-card" class="card mb-5 d-none">
+        <div class="card-header">
+            <strong>Datos de perfil</strong>
+        </div>
+        <div class="card-body">
+                <p><strong>Nombre:</strong> <span id="user-nombre"></span></p>
+                <p><strong>Apellido:</strong> <span id="user-apellido"></span></p>
+                <p><strong>Email:</strong> <span id="user-email"></span></p>
+                <p><strong>DNI:</strong> <span id="user-dni"></span></p>
+                <p><strong>Rango:</strong> <span id="user-rango"></span></p>
+                <hr>
+                <h5>Datos del Superior</h5>
+                <p><strong>Nombre:</strong> <span id="sup-nombre"></span></p>
+                <p><strong>Apellido:</strong> <span id="sup-apellido"></span></p>
+                <p><strong>Email:</strong> <span id="sup-email"></span></p>
+                <p><strong>Rango:</strong> <span id="sup-rango"></span></p>
+                <hr>
+                <h5>Datos del Cuartel</h5>
+                <p><strong>Nombre:</strong> <span id="cuartel-nombre"></span></p>
+                <p><strong>Email:</strong> <span id="cuartel-email"></span></p>
+                <p><strong>Teléfono:</strong> <span id="cuartel-telefono"></span></p>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <!-- scripts de Bootstrap -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- scripts -->
+    <script src="../public/js/perfilUser.js"></script>
+    
+    <script src="../public/js/componentLoader.js"></script>
+    <script>
+        Promise.all([
+            cargarComponente("navbar", "../public/components/navbarUser.html"),
+            cargarComponente("footer", "../public/components/footer.html")
+        ]).then(() => {
+            document.body.style.visibility = "visible";
+        });
+    </script>
+</body>
+</html>
