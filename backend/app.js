@@ -20,45 +20,48 @@ app.use('/',apiInventario);
 
 // Endpoint Login
 const authRoutes = require('./routes/auth.route');
-app.use('/',authRoutes)
+app.use('/',authRoutes);
 
 // Endpoint Registro
 const RegRoutes = require('./routes/registro.route');
-app.use('/',RegRoutes)
+app.use('/',RegRoutes);
 
 // Endpoint Home Admin
 const HomAdRoutes = require('./routes/homeAdmin.route');
-app.use('/',HomAdRoutes)
+app.use('/',HomAdRoutes);
 
 // Endpoint Home User
 const HomUsRoutes = require('./routes/homeUser.route');
-app.use('/',HomUsRoutes)
+app.use('/',HomUsRoutes);
 
 
 // Endpoint Guardias Admin
 const GuardiasAdRoutes = require('./routes/guardiasAdmin.route');
-app.use('/',GuardiasAdRoutes)
+app.use('/',GuardiasAdRoutes);
 
 // Endpoint Guardias User
 const GuardiasUsRoutes = require('./routes/guardiasUser.route');
-app.use('/',GuardiasUsRoutes)
+app.use('/',GuardiasUsRoutes);
 
 // Endpoint Inventario Admin
 const InventarioAdRoutes = require('./routes/inventarioAdmin.route');
-app.use('/',InventarioAdRoutes)
+app.use('/',InventarioAdRoutes);
 
 // Endpoint Inventario User
 const InventarioUsRoutes = require('./routes/inventarioUser.route');
-app.use('/',InventarioUsRoutes)
+app.use('/',InventarioUsRoutes);
 
 // Endpoint Tareas Admin
 const TareasAdRoutes = require('./routes/tareasAdmin.route');
-app.use('/',TareasAdRoutes)
+app.use('/',TareasAdRoutes);
 
 // Endpoint Tareas User
 const TareasUsRoutes = require('./routes/tareasUser.route');
-app.use('/',TareasUsRoutes)
+app.use('/',TareasUsRoutes);
 
+// Endpoint Perfil
+const perfilRoutes = require('./routes/perfil.route');
+app.use('/',perfilRoutes);
 
 app.listen(3000, () => {
   console.log('Servidor en http://localhost:3000');
