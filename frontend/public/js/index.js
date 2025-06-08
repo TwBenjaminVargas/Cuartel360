@@ -36,6 +36,7 @@ async function login()
       const resultado = await respuesta.json();
 
       if(respuesta.ok){
+        localStorage.setItem('datos_usuario', JSON.stringify(resultado));
         // Redirigir segun el rol
         if (resultado.rol === 1) {
           window.location.href = 'http://localhost:3000/homeAdmin';

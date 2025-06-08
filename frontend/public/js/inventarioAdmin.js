@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
 });
 
-const codigoCuartel = 6113;
+const datos_usuario = JSON.parse(localStorage.getItem('datos_usuario'));
+const codigoCuartel = datos_usuario.codigo;
 // 1) cargar tabla de inventario
   const cargarInventario = () => {
     fetch(`/api/inventarioAdmin?codigoCuartel=${codigoCuartel}`)
