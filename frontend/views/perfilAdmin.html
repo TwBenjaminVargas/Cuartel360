@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Cuartel</title>
+    <link rel="icon" type="image/png" href="../public/img/favicon.png">
+    <!-- CSS de Bootstrap -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="container mt-5">
+        <h1 class="display-4 text-center mb-4">Perfil</h1>
+
+        <!-- Card con datos del administrador -->
+        <div id="admin-card" class="card mb-5 d-none">
+        <div class="card-header">
+            <strong>Datos del Administrador</strong>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> <span id="admin-nombre"></span></p>
+            <p><strong>Apellido:</strong> <span id="admin-apellido"></span></p>
+            <p><strong>Email:</strong> <span id="admin-email"></span></p>
+            <p><strong>DNI:</strong> <span id="admin-dni"></span></p>
+            <p><strong>Rango:</strong> <span id="admin-rango"></span></p>
+            <hr>
+            <h5>Datos del Cuartel</h5>
+            <p><strong>Nombre:</strong> <span id="cuartel-nombre"></span></p>
+            <p><strong>Email:</strong> <span id="cuartel-email"></span></p>
+            <p><strong>Teléfono:</strong> <span id="cuartel-telefono"></span></p>
+        </div>
+        </div>
+
+        <!-- Lista de personal -->
+        <h2 class="h4 mb-3">Cuerpo activo</h2>
+        <div id="subordinados-list" class="row g-3"></div>
+    </main>
+
+    <div id="footer"></div>
+
+    <!-- scripts de Bootstrap -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- scripts -->
+    <script src="../public/js/perfilAdmin.js"></script>
+    
+    <script src="../public/js/componentLoader.js"></script>
+    <script>
+        Promise.all([
+            cargarComponente("navbar", "../public/components/navbarAdmin.html"),
+            cargarComponente("footer", "../public/components/footer.html")
+        ]).then(() => {
+            document.body.style.visibility = "visible";
+        });
+    </script>
+</body>
+</html>
