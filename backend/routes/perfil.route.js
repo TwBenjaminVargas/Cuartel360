@@ -4,13 +4,17 @@ const authMiddleware = require('../middleware/auth.middleware');
 const userDataService = require('../service/userData.service');
 const router = express.Router();
 
-/*
+
 router.get('/perfilUser',authMiddleware(2),(req, res) => {
     return res.sendFile(path.join(__dirname, '../../frontend/views/perfilUser.html'));
 });
-*/
+
+router.get('/perfilAdmin',authMiddleware(2),(req, res) => {
+    return res.sendFile(path.join(__dirname, '../../frontend/views/perfilAdmin.html'));
+});
+
 /**
- * Espera un email y devuelve la informacion segun el rol
+ * Espera un email y devuelve la informacion de un usuario
  */
 router.get('/perfilUser/data',authMiddleware(2), async (req, res) => {
     email = req.query.email
@@ -25,6 +29,10 @@ router.get('/perfilUser/data',authMiddleware(2), async (req, res) => {
         return res.status(401).json({ error: error.message });
     }   
 });
+/**
+ * Devuelve los datos de un administrador
+ * Espera que se le envie un email de administrador.
+ */
 router.get('/perfilAdmin/data',authMiddleware(1), async (req, res) => {
     email = req.query.email
     if(typeof email !== "string") return res.status(400).json({ error: 'Dato invalido' });
