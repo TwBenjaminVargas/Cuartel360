@@ -44,7 +44,7 @@ module.exports =
             const articulo = await Elemento.findOne({where : {id_elemento : elemento.id_elemento}});
             const estado = await Estado.findOne({where : {id_estado : elemento.id_estado}});
             return{
-                id_inventario:articulo.id_inventario,
+                id_inventario: elemento.id_inventario,
                 elemento : articulo.nombre,
                 estado : estado.nombre
             }
