@@ -26,7 +26,7 @@ router.get('/api/inventarioAdmin',authMiddleware(1),async (req, res) =>
 });
 
 /**
- * Endpoint vista usuario espera el id del bombero
+ * Endpoint vista usuario espera el email del bombero
  */
 router.get('/api/inventarioUsuario',authMiddleware(2), async (req, res) =>
 {
@@ -150,7 +150,6 @@ router.put("/api/inventario/estado/:id",authMiddleware(2), async (req, res) => {
     
     const id_inventario = Number(req.params.id);
     const nuevo_estado = Number(req.body.id_estado);
-    console.log(id_inventario,nuevo_estado);
     if (isNaN(id_inventario) || isNaN(nuevo_estado))
         return res.status(400).json({ error: 'Datos enviados en formato inválido' });
     try 
