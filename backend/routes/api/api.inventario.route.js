@@ -69,7 +69,8 @@ router.post('/api/inventarioAdmin',authMiddleware(1), async (req, res) =>
         return res.status(400).json({ error: 'Datos invalido' });
     try
     {
-        if(!inventarioService.añadirItemInventario(email,id_estado,id_elemento))
+        newItem =await inventarioService.añadirItemInventario(email,id_estado,id_elemento);
+        if(!newItem)
             return res.status(500).json({ mensaje: 'No se pudo registrar inventario' });
         
         return res.status(201).json({ message: 'Inventario registrado'})
@@ -95,9 +96,9 @@ router.post('/api/inventario/elementos',authMiddleware(1), async (req, res) =>
         return res.status(400).json({ error: 'Datos invalido' });
     try
     {
-        if(!inventarioService.añadirElemento(nombre,descripcion))
+        const elemento = await inventarioService.añadirElemento(nombre,descripcion);
+        if(!elemento)
             return res.status(500).json({ mensaje: 'No se pudo registrar elemento' });
-        
         return res.status(201).json({ message: 'Elemento registrado'})
     }
     catch (error)

@@ -66,12 +66,13 @@ module.exports =
         if(!bombero) throw new Error('Bombero no encontrado');
         if(!estado) throw new Error('Estado no encontrado');
         if(!elemento) throw new Error('Elemento no encontrado');
-        item = await InventarioPersonal.create(
+        newItem = await InventarioPersonal.create(
             {   id_cuartel : bombero.id_cuartel,
                 id_bombero : bombero.id_bombero,
                 id_estado,
                 id_elemento
-            })
+            });
+        return newItem;
     },
     /**
      * Devuelve la lista de elemntos existentes
