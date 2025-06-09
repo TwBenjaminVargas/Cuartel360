@@ -2,6 +2,7 @@
   --bordo: #790000;
   --bordo2: #5e0000;
   --bordo3: #4a0000;
+  --gris: #f3f1f1;
 }
 html, body {
   height: 100%;
@@ -12,6 +13,9 @@ body {
   display: flex;
   flex-direction: column;
   visibility: hidden;
+  background-color: var(--gris);
+  margin: 0;
+  padding: 0;
 }
 main {
   flex: 1;
