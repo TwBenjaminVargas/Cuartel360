@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const searchService = require('../service/search.service');
+const authMiddleware = require('../middleware/auth.middleware');
 
-router.get('/api/search', async (req, res) =>
+router.get('/api/search',authMiddleware(1), async (req, res) =>
 {
   try
   {
