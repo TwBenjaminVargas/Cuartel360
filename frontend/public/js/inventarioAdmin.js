@@ -16,8 +16,6 @@ let debounceTimer;
 function clearSugerencias() {
   sugerencias.innerHTML = '';
   sugerencias.style.display = 'none';
-  // borrar email oculto
-  inputEmail.value = '';
 }
 
 // Al escribir en el input de propietario
@@ -33,7 +31,7 @@ inputProp.addEventListener('input', e => {
   // Debounce para no saturar peticiones
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
-    fetch(`/api/search?apellido=${encodeURIComponent(term)}`)
+    fetch(`/api/search?term=${encodeURIComponent(term)}`)
       .then(r => r.ok ? r.json() : Promise.reject(r.status))
       .then(data => {
         sugerencias.innerHTML = '';
@@ -142,8 +140,8 @@ document.getElementById("formNuevoElemento").addEventListener("submit", function
 document.getElementById("formNuevoTipoElemento").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const nombre       = document.getElementById("nombreElemento").value;
-  const descripcion  = document.getElementById("descripcionElemento").value;
+  const nombre = document.getElementById("nombreElemento").value;
+  const descripcion = document.getElementById("descripcionElemento").value;
 
   fetch("/api/inventario/elementos", {
     method: "POST",
@@ -168,4 +166,13 @@ document.getElementById("formNuevoTipoElemento").addEventListener("submit", func
     console.error("Error al agregar tipo de elemento:", err);
     alert("No se pudo registrar el nuevo tipo de elemento.");
   });
+});
+
+// Al cerrar el modal, reseteo todo el formulario y el email hidden
+const modalNuevo = document.getElementById("nuevoElementoModal");
+modalNuevo.addEventListener('hidden.bs.modal', () => {
+  const form = document.getElementById('formNuevoElemento');
+  form.reset();           // limpia inputs visibles
+  inputEmail.value = '';  // limpia el hidden
+  clearSugerencias();     // por si queda la lista abierta
 });
