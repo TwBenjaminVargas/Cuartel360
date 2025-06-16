@@ -9,7 +9,19 @@ document.addEventListener('DOMContentLoaded', function () {
       center: 'title',
       right: ''
     },
-    events: '/api/guardias',
+    events: function(info, successCallback, failureCallback) {
+      const endDate = new Date(info.endStr);
+      let month = endDate.getMonth();
+      let year  = endDate.getFullYear();
+      if (month === 0) { month = 12; year--; }
+      fetch(`/api/guardias?month=${month}&year=${year}`)
+        .then(r => {
+          if (!r.ok) return Promise.reject(r);
+          return r.json();
+        })
+        .then(data => successCallback(data))
+        .catch(err => failureCallback(err));
+    },
     eventDisplay: 'list-item',
     
     eventContent: function(arg) {

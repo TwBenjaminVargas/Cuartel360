@@ -10,14 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
       right: ''
     },
     events: function(info, successCallback, failureCallback) {
-      const fecha = new Date(info.start); // inicio del rango visible
-      const mes = fecha.getMonth() + 1; // Meses van de 0 a 11
-      const anio = fecha.getFullYear();
-
-      fetch(`/api/guardias?mes=${mes}&anio=${anio}`)
-        .then(response => response.json())
+      const endDate = new Date(info.endStr);
+      let month = endDate.getMonth();
+      let year  = endDate.getFullYear();
+      if (month === 0) { month = 12; year--; }
+      fetch(`/api/guardias?month=${month}&year=${year}`)
+        .then(r => {
+          if (!r.ok) return Promise.reject(r);
+          return r.json();
+        })
         .then(data => successCallback(data))
-        .catch(error => failureCallback(error));
+        .catch(err => failureCallback(err));
     },
 
     eventDisplay: 'list-item',
