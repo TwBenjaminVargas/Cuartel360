@@ -50,10 +50,26 @@
         </div>
         <div class="modal-body">
             <form id="formNuevoElemento">
-            <div class="mb-3">
-                <label for="emailElemento" class="form-label">Email de propietario</label>
-                <input type="text" class="form-control" id="emailElemento" required>
+            
+            <div class="mb-3 position-relative">
+            <label for="propietarioInput" class="form-label">Propietario</label>
+            <!-- input visible -->
+            <input type="text"
+                    class="form-control"
+                    id="propietarioInput"
+                    autocomplete="off"
+                    placeholder="Escriba los primeros 2 caracteres del apellido"
+                    required>
+            <!-- input hidden para el email -->
+            <input type="hidden" id="propietarioEmail">
+            <!-- contenedor para sugerencias -->
+            <ul id="listaSugerencias"
+                class="list-group position-absolute w-100"
+                style="z-index: 2000; display: none;">
+                <!-- <li> dinámicamente -->
+            </ul>
             </div>
+            
             <div class="mb-3">
               <label for="elementoSelect" class="form-label">Elemento</label>
               <select class="form-select" id="elementoSelect" required>
