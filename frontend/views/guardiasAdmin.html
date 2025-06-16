@@ -40,12 +40,28 @@
             <h5 class="modal-title" id="nuevaGuardiaModalLabel">Agregar Guardia</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
+            
             <div class="modal-body">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" required>
-                <div id="error-email" class="text-danger mt-1 d-none">Email no válido.</div>
+                
+            <div class="mb-3 position-relative">
+            <label for="propietarioInput" class="form-label">Propietario</label>
+            <!-- input visible -->
+            <input type="text"
+                    class="form-control"
+                    id="propietarioInput"
+                    autocomplete="off"
+                    placeholder="Escriba los primeros 2 caracteres del apellido"
+                    required>
+            <!-- input hidden para el email -->
+            <input type="hidden" id="propietarioEmail">
+            <!-- contenedor para sugerencias -->
+            <ul id="listaSugerencias"
+                class="list-group position-absolute w-100"
+                style="z-index: 2000; display: none;">
+                <!-- <li> dinámicamente -->
+            </ul>
             </div>
+            
             <div class="mb-3">
                 <label for="inicio" class="form-label">Inicio</label>
                 <input type="datetime-local" class="form-control" id="inicio" required>

@@ -1,109 +1,136 @@
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendario');
 
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    locale: 'es',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: ''
-    },
+  const guardiasSource = {
+    id: 'guardiasFW',
     events: function(info, successCallback, failureCallback) {
+      // extraigo mes y año como antes
       const endDate = new Date(info.endStr);
       let month = endDate.getMonth();
       let year  = endDate.getFullYear();
       if (month === 0) { month = 12; year--; }
+
       fetch(`/api/guardias?month=${month}&year=${year}`)
-        .then(r => {
-          if (!r.ok) return Promise.reject(r);
-          return r.json();
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => {
+          // ② Mapeo tu data al formato FullCalendar
+          const events = data.map(item => ({
+            id:    item.id,                // si tu API lo devuelve como id
+            title: item.title || item.nombre || `${item.nombre} ${item.apellido}`,
+            start: item.start,             // ISO string
+            end:   item.end                // ISO string
+          }));
+          successCallback(events);
         })
-        .then(data => successCallback(data))
         .catch(err => failureCallback(err));
-    },
+    }
+  };
 
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    locale: 'es',
+    headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
     eventDisplay: 'list-item',
-
     eventContent: function(arg) {
       const event = arg.event;
-
-      // funcion para formatear hora 
-      function formatTime(date) {
-        if (!date) return '';
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        return `${hours}:${minutes}`;
-      }
-
-      const timeText = formatTime(event.start);
-      const titleText = event.title || '';
-
+      const h = event.start.getHours().toString().padStart(2,'0');
+      const m = event.start.getMinutes().toString().padStart(2,'0');
       const container = document.createElement('div');
-      container.style.color = 'black';
-      container.style.fontSize = '0.85rem';
-      container.style.lineHeight = '1.2'; // reduce espacio vertical
-      container.style.padding = '0'; // sin padding extra
-      container.style.margin = '0'; // sin margen extra
-
-      container.innerHTML = `<span style="font-weight: normal;">${timeText}</span> - <strong>${titleText}</strong>`;
-
+      container.style.cssText = 'color:black;font-size:.85rem;line-height:1.2;padding:0;margin:0';
+      container.innerHTML = `<span>${h}:${m}</span> - <strong>${event.title}</strong>`;
       return { domNodes: [container] };
-    }
-
-
+    },
+    eventSources: [ guardiasSource ]  
   });
 
   calendar.render();
+
+  // Autocomplete de bombero 
+  const inputProp = document.getElementById('propietarioInput');
+  const inputEmail = document.getElementById('propietarioEmail');
+  const sugerencias = document.getElementById('listaSugerencias');
+  let debounceTimer;
+
+  function clearSugerencias() {
+    sugerencias.innerHTML = '';
+    sugerencias.style.display = 'none';
+  }
+
+  // input de búsqueda
+  inputProp.addEventListener('input', e => {
+    const term = e.target.value.trim();
+    if (term.length < 2) {
+      clearSugerencias();
+      return;
+    }
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      fetch(`/api/search?term=${encodeURIComponent(term)}`)
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => {
+          sugerencias.innerHTML = '';
+          if (!data.length) return clearSugerencias();
+          data.forEach(b => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item list-group-item-action';
+            li.textContent = `${b.nombre} ${b.apellido} — ${b.email}`;
+            li.addEventListener('click', () => {
+              inputProp.value = `${b.nombre} ${b.apellido}`;
+              inputEmail.value = b.email;
+              clearSugerencias();
+            });
+            sugerencias.appendChild(li);
+          });
+          sugerencias.style.display = 'block';
+        })
+        .catch(() => clearSugerencias());
+    }, 300);
+  });
+
+  // ocultar si clic fuera
+  document.addEventListener('click', e => {
+    if (!sugerencias.contains(e.target) && e.target !== inputProp) {
+      clearSugerencias();
+    }
+  });
 
   // Agregar nueva guardia
   document.getElementById('formNuevaGuardia').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const email = document.getElementById('email').value;
+    const email  = inputEmail.value.trim();
     const inicio = document.getElementById('inicio').value;
-    const fin = document.getElementById('fin').value;
-
-    const nuevaGuardia = {
-      email: email,
-      start: inicio,
-      end: fin
-    };
+    const fin    = document.getElementById('fin').value;
+    if (!email || !inicio || !fin) {
+      return alert('Complete todos los campos');
+    }
 
     fetch('/api/guardias', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(nuevaGuardia)
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, start: inicio, end: fin })
     })
-    .then(async response => {
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (data.error === 'Email invalido') {
-          document.getElementById('error-email').classList.remove('d-none');
-        } else {
-          alert(data.error || 'Error desconocido al agregar guardia');
-        }
-        throw new Error(data.error);
-      }
-
-      // exito: oculta error y actualiza
-      document.getElementById('error-email').classList.add('d-none');
-
+    .then(r => r.ok ? r.json() : Promise.reject(r))
+    .then(() => {
       const modal = bootstrap.Modal.getInstance(document.getElementById('nuevaGuardiaModal'));
       modal.hide();
-      calendar.refetchEvents(); // Recarga el calendario
+      // ④ refetch solo la fuente de guardias
+      const source = calendar.getEventSourceById('guardiasFW');
+      if (source) source.refetch();
     })
-    .catch(error => {
-      console.error(error);
+    .catch(err => {
+      console.error(err);
+      alert('Error al agregar guardia');
     });
 
   });
 
-  document.getElementById('email').addEventListener('input', () => {
-    document.getElementById('error-email').classList.add('d-none');
+  // limpia email al cerrar modal
+  const modalG = document.getElementById('nuevaGuardiaModal');
+  modalG.addEventListener('hidden.bs.modal', () => {
+    document.getElementById('formNuevaGuardia').reset();
+    inputEmail.value = '';
+    clearSugerencias();
   });
 
 });
