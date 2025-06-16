@@ -5,7 +5,7 @@ const authMiddleware = require('../../middleware/auth.middleware');
 const router = express.Router();
 
 
-router.get('/api/guardias', async (req, res) =>
+router.get('/api/guardias',authMiddleware(2), async (req, res) =>
 {
     const year = parseInt(req.query.year);
     const month = parseInt(req.query.month);
