@@ -1,22 +1,36 @@
 const { Bombero, Guardia } = require('../models'); // base de datos
+const { Op } = require('sequelize');
+
 
 module.exports =
 {
   /**
-   *  Muestra la grilla completa de guardias
+   *  Muestra la grilla de guardias de un mes
+   * @param year solicitado
+   * @param month solicitado
+   * @return grilla del mes solicitado
    */
-  getGrillaGuardia: async () => {
-    const guardias = await Guardia.findAll();
+  getGrillaGuardia: async (year,month) => {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 1);
+
+    const guardias = await Guardia.findAll({
+      where: {
+          start:{[Op.gte]: startDate,[Op.lt]: endDate,}
+      }
+    });
+
     const grilla = await Promise.all(guardias.map(async(guardia) => {
         const bombero = await Bombero.findOne({ where: { id_bombero: guardia.id_bombero }});
         return {
-            ...guardia.toJSON(), // convierte el modelo Sequelize a un objeto plano
+            ...guardia.toJSON(),
             title: bombero.nombre }
         }));
     
     return grilla;
    
   },
+  
   /**
    * Añade una guardia a la grilla
    * @param {String} email 

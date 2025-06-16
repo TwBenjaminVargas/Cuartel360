@@ -5,9 +5,13 @@ const authMiddleware = require('../../middleware/auth.middleware');
 const router = express.Router();
 
 
-router.get('/api/guardias',authMiddleware(2), async (req, res) =>
+router.get('/api/guardias', async (req, res) =>
 {
-    res.json(await calendarService.getGrillaGuardia());
+    const year = parseInt(req.query.year);
+    const month = parseInt(req.query.month);
+    if (!year || !month)
+      return res.status(400).json({ error: 'Datos incompatibles' })
+    res.json(await calendarService.getGrillaGuardia(year,month));
 
 });
 
