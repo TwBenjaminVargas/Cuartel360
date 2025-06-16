@@ -160,7 +160,7 @@ document.getElementById("formNuevoTipoElemento").addEventListener("submit", func
     // Refrescar el dropdown de elementos
     const elementoSelect = document.getElementById("elementoSelect");
     elementoSelect.innerHTML = '<option value="" disabled selected>Seleccione un elemento</option>';
-    cargarSelect('/api/inventario/elementos', 'elementoSelect', 'nombre');
+    cargarSelect('/api/inventario/elementos', 'elementoSelect', 'nombre', 'id_elemento');
   })
   .catch(err => {
     console.error("Error al agregar tipo de elemento:", err);
