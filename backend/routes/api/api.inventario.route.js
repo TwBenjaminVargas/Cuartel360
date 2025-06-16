@@ -61,15 +61,16 @@ router.get('/api/inventario/elementos',authMiddleware(1), async (req, res) =>
  */
 router.post('/api/inventarioAdmin',authMiddleware(1), async (req, res) => 
 {
-    const email = req.body.email;
-    const id_estado = Number(req.body.id_estado)
-    const id_elemento = Number(req.body.id_elemento)
-    if (typeof email !== 'string' ||
-        isNaN(id_elemento) || isNaN(id_estado))
+    const { email, id_estado, id_elemento } = req.body;
+    if (!email?.trim() || id_estado === undefined || id_elemento === undefined)
+        return res.status(400).json({ error: 'Faltan campos requeridos' });
+    const id_estado_num = Number(id_estado);
+    const id_elemento_num = Number(id_elemento);
+    if (isNaN(id_elemento) || isNaN(id_estado))
         return res.status(400).json({ error: 'Datos invalido' });
     try
     {
-        newItem =await inventarioService.añadirItemInventario(email,id_estado,id_elemento);
+        newItem =await inventarioService.añadirItemInventario(email,id_estado_num,id_elemento_num);
         if(!newItem)
             return res.status(500).json({ mensaje: 'No se pudo registrar inventario' });
         
