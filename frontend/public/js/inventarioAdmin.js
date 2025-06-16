@@ -6,9 +6,72 @@ document.addEventListener('DOMContentLoaded', () => {
   
 });
 
+// Autocomplete de bomberos por apellido
+const inputProp = document.getElementById('propietarioInput');
+const inputEmail = document.getElementById('propietarioEmail');
+const sugerencias = document.getElementById('listaSugerencias');
+let debounceTimer;
+
+// Función para vaciar sugerencias
+function clearSugerencias() {
+  sugerencias.innerHTML = '';
+  sugerencias.style.display = 'none';
+  // borrar email oculto
+  inputEmail.value = '';
+}
+
+// Al escribir en el input de propietario
+inputProp.addEventListener('input', e => {
+  const term = e.target.value.trim();
+
+  // Si es menos de 2 caracteres, limpia y sale
+  if (term.length < 2) {
+    clearSugerencias();
+    return;
+  }
+
+  // Debounce para no saturar peticiones
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    fetch(`/api/search?apellido=${encodeURIComponent(term)}`)
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(data => {
+        sugerencias.innerHTML = '';
+        if (data.length === 0) {
+          clearSugerencias();
+          return;
+        }
+        data.forEach(bombero => {
+          const li = document.createElement('li');
+          li.className = 'list-group-item list-group-item-action';
+          li.textContent = `${bombero.nombre} ${bombero.apellido} — ${bombero.email}`;
+          // Al hacer click en una opcion
+          li.addEventListener('click', () => {
+            inputProp.value = `${bombero.nombre} ${bombero.apellido}`;
+            inputEmail.value = bombero.email;
+            clearSugerencias();
+          });
+          sugerencias.appendChild(li);
+        });
+        sugerencias.style.display = 'block';
+      })
+      .catch(err => {
+        console.error('Error autocomplete bombero:', err);
+        clearSugerencias();
+      });
+  }, 300); // espera 300 ms 
+});
+
+// Ocultar sugerencias si se hace click fuera
+document.addEventListener('click', e => {
+  if (!sugerencias.contains(e.target) && e.target !== inputProp) {
+    clearSugerencias();
+  }
+});
+
 const datos_usuario = JSON.parse(localStorage.getItem('datos_usuario'));
 const codigoCuartel = datos_usuario.codigo;
-// 1) cargar tabla de inventario
+// carga tabla de inventario
   const cargarInventario = () => {
     fetch(`/api/inventarioAdmin?codigoCuartel=${codigoCuartel}`)
       .then(res => res.ok ? res.json() : Promise.reject('Error al obtener inventario'))
@@ -48,9 +111,9 @@ const codigoCuartel = datos_usuario.codigo;
 document.getElementById("formNuevoElemento").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const email     = document.getElementById("emailElemento").value;
+  const email = document.getElementById("propietarioEmail").value;
   const id_elemento = Number(document.getElementById("elementoSelect").value);
-  const id_estado   = Number(document.getElementById("estadoSelect").value);
+  const id_estado = Number(document.getElementById("estadoSelect").value);
 
   fetch("/api/inventarioAdmin", {
     method: "POST",
