@@ -9,7 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
       center: 'title',
       right: ''
     },
-    events: '/api/guardias',
+    events: function(info, successCallback, failureCallback) {
+      const fecha = new Date(info.start); // inicio del rango visible
+      const mes = fecha.getMonth() + 1; // Meses van de 0 a 11
+      const anio = fecha.getFullYear();
+
+      fetch(`/api/guardias?mes=${mes}&anio=${anio}`)
+        .then(response => response.json())
+        .then(data => successCallback(data))
+        .catch(error => failureCallback(error));
+    },
+
     eventDisplay: 'list-item',
 
     eventContent: function(arg) {
