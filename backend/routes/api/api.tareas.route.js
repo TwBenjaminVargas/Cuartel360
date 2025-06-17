@@ -64,8 +64,8 @@ router.post('/api/tareas',authMiddleware(1), async (req, res) =>
         return res.status(400).json({ error: 'Datos incompatibles' });
     try
     {
-        await tareasService.registrarTarea(descripcion,prioridad,email,req.usuario.id);
-        return res.status(201).json({ mensaje: 'Tarea registrada correctamente' });
+        const tarea = await tareasService.registrarTarea(descripcion,prioridad,email,req.usuario.id);
+        return res.status(201).json(tarea);
 
     }
     catch (error)

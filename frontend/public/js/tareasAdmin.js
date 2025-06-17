@@ -117,9 +117,8 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then((data) => {
         modalNuevaTarea.hide();
-
         const tareaLocal = {
-            id_tarea: Date.now(),      
+            id_tarea: data.id,      
             descripcion: descIn.value.trim(),
             prioridad: priIn.value,
             asignadoNombre: propIn.value, 

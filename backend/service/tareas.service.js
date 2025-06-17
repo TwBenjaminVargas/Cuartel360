@@ -55,7 +55,13 @@ module.exports =
         const tarea = await Tarea.create({descripcion,estado:0,id_bombero: bombero.id_bombero,
             id_cuartel:admin.id_cuartel,prioridad});
         if(!tarea) throw new Error("Error al crear tarea");
-        return tarea;
+        return {
+        id: tarea.id_tarea,
+        nombre: bombero.nombre,
+        apellido: bombero.apellido,
+        descripcion: tarea.descripcion,
+        prioridad: tarea.prioridad
+        };
     },
     
     
