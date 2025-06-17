@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const tabla = document.getElementById("tabla-tareas");
 
-    fetch("http://localhost:3000/api/tareas")
+    fetch("http://localhost:3000/api/tareasUser")
         .then(response => response.json())
         .then(data => {
             data.forEach(tarea => {

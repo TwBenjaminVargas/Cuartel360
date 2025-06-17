@@ -12,7 +12,7 @@ const inputEmail = document.getElementById('propietarioEmail');
 const sugerencias = document.getElementById('listaSugerencias');
 let debounceTimer;
 
-// Función para vaciar sugerencias
+// Funcion para vaciar sugerencias
 function clearSugerencias() {
   sugerencias.innerHTML = '';
   sugerencias.style.display = 'none';
@@ -28,7 +28,6 @@ inputProp.addEventListener('input', e => {
     return;
   }
 
-  // Debounce para no saturar peticiones
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
     fetch(`/api/search?term=${encodeURIComponent(term)}`)
@@ -168,11 +167,11 @@ document.getElementById("formNuevoTipoElemento").addEventListener("submit", func
   });
 });
 
-// Al cerrar el modal, reseteo todo el formulario y el email hidden
+// Al cerrar el modal, resetea todo el formulario 
 const modalNuevo = document.getElementById("nuevoElementoModal");
 modalNuevo.addEventListener('hidden.bs.modal', () => {
   const form = document.getElementById('formNuevoElemento');
-  form.reset();           // limpia inputs visibles
-  inputEmail.value = '';  // limpia el hidden
-  clearSugerencias();     // por si queda la lista abierta
+  form.reset();          
+  inputEmail.value = '';  
+  clearSugerencias();    
 });

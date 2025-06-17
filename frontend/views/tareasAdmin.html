@@ -17,27 +17,75 @@
         <div class="container mt-5">
         <h1 class="display-4 text-center mb-4">Tareas</h1>
 
+        <!-- Boton para agregar tarea -->
         <div class="mb-4">
-            <div class="input-group">
-                <input type="text" id="descripcion-tarea" class="form-control" placeholder="Nueva tarea...">
-                <button id="btn-agregar-tarea" class="btn btn-primary">Agregar</button>
-            </div>
-            <div class="alert alert-danger mt-2 d-none" id="alerta-vacia">
-                La descripción no puede estar vacía.
-            </div>
+            <button id="btn-abrir-modal" class="btn btn-primary">Nueva tarea</button>
         </div>
 
+        <!-- tabla de tareas -->
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
-                <tr>
+                <tr class="table-dark">
                     <th style="width: 50px;">✔</th>
                     <th>Descripción</th>
+                    <th>Prioridad</th>
+                    <th>Asignado a</th>
                 </tr>
             </thead>
             <tbody id="tabla-tareas">
             </tbody>
         </table>
         </div>
+
+        <!-- Modal de nueva tarea -->
+        <div class="modal fade" id="modalNuevaTarea" tabindex="-1" aria-labelledby="modalNuevaTareaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formNuevaTarea" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNuevaTareaLabel">Agregar nueva tarea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Descripcion -->
+                <div class="mb-3">
+                <label for="inputDescripcion" class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="inputDescripcion" required>
+                <div class="invalid-feedback">
+                    La descripción no puede estar vacía.
+                </div>
+                </div>
+                <!-- Prioridad -->
+                <div class="mb-3">
+                <label for="selectPrioridad" class="form-label">Prioridad</label>
+                <select class="form-select" id="selectPrioridad" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                </select>
+                <div class="invalid-feedback">
+                    Debes elegir una prioridad.
+                </div>
+                </div>
+                <!-- Asignacion (autocomplete) -->
+                <div class="mb-3 position-relative">
+                <label for="propietarioInput" class="form-label">Asignar a</label>
+                <input type="text" id="propietarioInput" class="form-control" placeholder="Buscar bombero..." autocomplete="off" required>
+                <input type="hidden" id="propietarioEmail">
+                <ul id="listaSugerencias" class="list-group position-absolute w-100" style="z-index: 1055; display: none;"></ul>
+                <div class="invalid-feedback">
+                    Debes asignar la tarea a alguien.
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar tarea</button>
+            </div>
+            </form>
+        </div>
+        </div>
+
     </main>
 
     <div id="footer"></div>

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const guardiasSource = {
     id: 'guardiasFW',
     events: function(info, successCallback, failureCallback) {
-      // extraigo mes y año como antes
+      
       const endDate = new Date(info.endStr);
       let month = endDate.getMonth();
       let year  = endDate.getFullYear();
@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch(`/api/guardias?month=${month}&year=${year}`)
         .then(r => r.ok ? r.json() : Promise.reject(r.status))
         .then(data => {
-          // ② Mapeo tu data al formato FullCalendar
+          // Mapeo al formato FullCalendar
           const events = data.map(item => ({
-            id:    item.id,                // si tu API lo devuelve como id
+            id:    item.id,           
             title: item.title || item.nombre || `${item.nombre} ${item.apellido}`,
-            start: item.start,             // ISO string
-            end:   item.end                // ISO string
+            start: item.start,            
+            end:   item.end               
           }));
           successCallback(events);
         })
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(() => {
       const modal = bootstrap.Modal.getInstance(document.getElementById('nuevaGuardiaModal'));
       modal.hide();
-      // ④ refetch solo la fuente de guardias
+
       const source = calendar.getEventSourceById('guardiasFW');
       if (source) source.refetch();
     })
