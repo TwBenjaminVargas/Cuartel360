@@ -12,7 +12,7 @@ module.exports =
     {
         const bombero = await Bombero.findOne({where :{id_bombero}});
         if (!bombero)throw new Error("Bombero no encontrado");
-        const tareas = await Tarea.findAll({where:{id_bombero},attributes: ['prioridad', 'descripcion', 'estado']});
+        const tareas = await Tarea.findAll({where:{id_bombero},attributes: ['id_tarea','prioridad', 'descripcion', 'estado']});
         if(!tareas) throw new Error("Error al conseguir tareas");
         return tareas;
     },
@@ -25,7 +25,7 @@ module.exports =
         const bombero = await Bombero.findOne({where :{id_bombero}});
         if (!bombero)throw new Error("Bombero no encontrado");
         const tareas = await Tarea.findAll({where:{id_cuartel:bombero.id_cuartel},
-            attributes: ['prioridad', 'descripcion', 'estado'],
+            attributes: ['id_tarea','prioridad', 'descripcion', 'estado'],
             include: [
             {
             model: Bombero,
@@ -55,6 +55,7 @@ module.exports =
         const tarea = await Tarea.create({descripcion,estado:0,id_bombero: bombero.id_bombero,
             id_cuartel:admin.id_cuartel,prioridad});
         if(!tarea) throw new Error("Error al crear tarea");
+        return tarea;
     },
     
     
