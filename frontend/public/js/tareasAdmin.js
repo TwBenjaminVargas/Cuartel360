@@ -134,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Funcion agregarTareaATabla extendida
 function agregarTareaATabla(tarea) {
+
   const tabla = document.getElementById("tabla-tareas");
   const fila = document.createElement("tr");
 
@@ -168,7 +169,13 @@ function agregarTareaATabla(tarea) {
 
   // Asignado a
   const tdAsig = document.createElement("td");
-  tdAsig.textContent = tarea.asignadoNombre || tarea.asignadoEmail;
+  if (tarea.Bombero && tarea.Bombero.nombre) {
+    tdAsig.textContent = `${tarea.Bombero.nombre} ${tarea.Bombero.apellido}`;
+
+   } else {
+    tdAsig.textContent = tarea.asignadoNombre || tarea.asignadoEmail || '—';
+    }
+
   fila.appendChild(tdAsig);
 
   tabla.appendChild(fila);
