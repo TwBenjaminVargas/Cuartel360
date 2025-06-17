@@ -140,49 +140,63 @@ async function initData() {
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Revisar equipo de respiración',
-      estado: 0
+      estado: 0,
+      prioridad: 'alta',
+      id_cuartel: 1
     });
 
     await Tarea.create(
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Limpiar Camion',
-      estado: 0
+      estado: 0,
+      prioridad: 'media',
+      id_cuartel: 1
     });
 
     await Tarea.create(
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Ordenar sector estructural',
-      estado: 0
+      estado: 0,
+      prioridad: 'baja',
+      id_cuartel: 1
     });
     
     await Tarea.create(
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Alimentar perros K-9',
-      estado: 0
+      estado: 0,
+      prioridad: 'baja',
+      id_cuartel: 1
     });
 
         await Tarea.create(
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Limpieza movil 13',
-      estado: 0
+      estado: 0,
+      prioridad: 'media',
+      id_cuartel: 1
     });
 
     await Tarea.create(
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Descontaminacion de trajes estructurales',
-      estado: 0
+      estado: 0,
+      prioridad: 'alta',
+      id_cuartel: 1
     });
 
     await Tarea.create(
     {
       id_bombero: usuarioBombero.id_bombero,
       descripcion: 'Reunion cuerpo activo',
-      estado: 0
+      estado: 0,
+      prioridad: 'media',
+      id_cuartel: 1
     });
     //estado
     await Estado.create(

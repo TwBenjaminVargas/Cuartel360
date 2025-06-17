@@ -2,12 +2,37 @@ const express = require('express');
 const path = require('path');
 const tareasService = require('../../service/tareas.service');
 const authMiddleware = require('../../middleware/auth.middleware');
+const { error } = require('console');
 const router = express.Router();
 
-
-router.get('/api/tareas',authMiddleware(2), async (req, res) => {
-    res.json(await tareasService.getListaTareas());
-
+/**
+ * Enpoint GET para solicitud de tareas de un usuario
+ */
+router.get('/api/tareasUser',authMiddleware(2), async (req, res) => {
+    try
+    {
+        res.json(await tareasService.getListaTareasUsuario(req.usuario.id));
+    }
+    catch (error)
+    {
+        console.log("Error en getListaTareasUsuario: ", error);
+        return res.status(500).json({message: "Error en servidor"});
+    }
+    
+});
+/**
+ * Enpoint GET para solicitud de tareas de un administrador
+ */
+router.get('/api/tareasAdmin',authMiddleware(1), async (req, res) => {
+     try
+    {
+        res.json(await tareasService.getListaTareasAdministrador(req.usuario.id));
+    }
+    catch (error)
+    {
+        console.log("Error en getListaTareasAdministrador: ", error);
+        return res.status(500).json({message: "Error en servidor"});
+    }
 });
 
 router.put("/api/tareas/:id",authMiddleware(2), async (req, res) => {
@@ -27,19 +52,26 @@ router.put("/api/tareas/:id",authMiddleware(2), async (req, res) => {
     }
 });
 
+/**
+ * Endpoint para agregar tareas
+ */
 router.post('/api/tareas',authMiddleware(1), async (req, res) =>
 {
-    const descripcion = req.body.descripcion;
-    if (typeof descripcion !== 'string') return res.status(400).json({ error: 'Datos incompatibles' });
+    const {descripcion, email, prioridad} = req.body;
+    if(!descripcion?.trim() || !email?.trim() || !prioridad?.trim())
+        return res.status(400).json({ error: 'Faltan campos requeridos' });
+    if (typeof descripcion !== 'string' || typeof email !== "string" || typeof prioridad !== "string")
+        return res.status(400).json({ error: 'Datos incompatibles' });
     try
     {
-        await tareasService.registrarTarea(descripcion);
-        res.status(201).json({ mensaje: 'Tarea registrada correctamente' });
+        await tareasService.registrarTarea(descripcion,prioridad,email,req.usuario.id);
+        return res.status(201).json({ mensaje: 'Tarea registrada correctamente' });
 
     }
     catch (error)
     {
-        res.status(401).json({ error: error.message });
+        console.log("Error en POST api tareas: ", error);
+        return res.status(401).json({ error: error.message });
     }
 });
 

@@ -27,9 +27,11 @@ Rol.hasMany(Bombero, { foreignKey: 'id_rol' });
 Bombero.belongsTo(Bombero, { as: 'superior', foreignKey: 'id_superior' });
 Bombero.hasMany(Bombero, { as: 'subordinados', foreignKey: 'id_superior' });
 
-// Tarea -> Bombero
+// Tarea -> Bombero,Cuartel
 Tarea.belongsTo(Bombero, { foreignKey: 'id_bombero' });
 Bombero.hasMany(Tarea, { foreignKey: 'id_bombero' });
+Tarea.belongsTo(Cuartel,{foreignKey: 'id_cuartel'});
+Cuartel.hasMany(Tarea,{foreignKey: 'id_cuartel'});
 
 // InventarioPersonal -> Bombero, Elemento, Estado
 InventarioPersonal.belongsTo(Cuartel, { foreignKey: 'id_cuartel' });
