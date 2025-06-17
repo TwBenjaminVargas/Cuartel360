@@ -6,6 +6,7 @@ const authMiddleware = (rol) => {
             const tokenPayload = await authService.validateToken(token);
             if(tokenPayload.rol > rol)
                 return res.status(401).json({ error: 'Rol no autorizado' });
+            req.usuario = tokenPayload;
             next();
         } catch (error) {
             // problemas con los tokens

@@ -24,8 +24,21 @@ module.exports = (sequelize,DataTypes) =>
         model: 'bomberos',
         key: 'id_bombero'
       }
-    }
-  
+    },
+    id_cuartel: 
+    {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references:
+      {
+        model: 'cuarteles',
+        key: 'id_cuartel'
+      }
+    },
+    prioridad: {
+      type: DataTypes.ENUM('alta', 'media', 'baja'),
+      allowNull: false
+    } 
   },
   {
     tableName: 'tareas',
