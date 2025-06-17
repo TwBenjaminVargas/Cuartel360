@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const nueva = {
       descripcion: descIn.value.trim(),
       prioridad: priIn.value,
-      asignadoEmail: email,
+      email: email,
     };
 
     fetch("http://localhost:3000/api/tareas", {
@@ -117,8 +117,16 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then((data) => {
         modalNuevaTarea.hide();
-        // Agregar tarea nueva a la tabla
-        agregarTareaATabla(data.tarea);
+
+        const tareaLocal = {
+            id_tarea: Date.now(),      
+            descripcion: descIn.value.trim(),
+            prioridad: priIn.value,
+            asignadoNombre: propIn.value, 
+            asignadoEmail: email,
+            estado: 0
+        };
+        agregarTareaATabla(tareaLocal);
       })
       .catch((err) => console.error(err));
   });
