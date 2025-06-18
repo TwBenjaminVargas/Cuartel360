@@ -74,10 +74,13 @@ router.post('/api/tareas',authMiddleware(1), async (req, res) =>
 });
 
 // Borrar tarea lógicamente (Perduran en BD como historial)
-router.delete('/api/tareas/:id', async (req, res) => {
+router.delete('/api/tareas/:id',authMiddleware(1), async (req, res) => {
   try
   {
     const id_tarea = Number(req.params.id);
+    if(isNaN(id_tarea))
+      return res.status(400).json({ error: 'Dato invalido' });
+
     const result = await tareasService.borrarTarea(id_tarea);
     if (result === 0)
       return res.status(404).json({ mensaje: 'Tarea no encontrada' });
@@ -87,7 +90,8 @@ router.delete('/api/tareas/:id', async (req, res) => {
   catch (error)
   {
     console.error(error);
-    res.status(500).json({ mensaje: 'Error al borrar la tarea' });
+    
+    return res.status(500).json({ mensaje: 'Error al borrar la tarea' });
   }
 });
 
