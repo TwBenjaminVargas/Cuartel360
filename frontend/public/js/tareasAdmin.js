@@ -1,14 +1,30 @@
+let tareaAEliminar = null;
+let filaAEliminar = null;
+
+const modalConfirmacionEliminacionEl = document.getElementById("modalConfirmarEliminacion");
+let modalConfirmacionEliminacion;
+
 document.addEventListener("DOMContentLoaded", function () {
   const tabla = document.getElementById("tabla-tareas");
 
-  // Inicializar modal
+  // Inicializar modal de crear tarea
   const modalNuevaTareaEl = document.getElementById("modalNuevaTarea");
   const modalNuevaTarea = new bootstrap.Modal(modalNuevaTareaEl);
+  
+  modalConfirmacionEliminacion = new bootstrap.Modal(modalConfirmacionEliminacionEl);
 
+  document.getElementById("btnConfirmarEliminar").addEventListener("click", () => {
+    if (tareaAEliminar && filaAEliminar) {
+      eliminarTarea(tareaAEliminar, filaAEliminar);
+      modalConfirmacionEliminacion.hide();
+    }
+  });
+  console.log("Cargando tareas...")
   fetch("http://localhost:3000/api/tareasAdmin")
     .then((response) => response.json())
     .then((data) => {
-        
+      console.log("Tareas desde el backend:", data);
+      document.getElementById("tabla-tareas").innerHTML = "";
       data.forEach((tarea) => {
         agregarTareaATabla(tarea);
       });
@@ -78,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // çManejar envio del formulario
+  // Manejar envio del formulario
   const form = document.getElementById("formNuevaTarea");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -177,6 +193,23 @@ function agregarTareaATabla(tarea) {
 
   fila.appendChild(tdAsig);
 
+  // Boton eliminar
+  const tdEliminar = document.createElement("td");
+  const btnEliminar = document.createElement("button");
+  btnEliminar.innerHTML = "🗑️";
+  btnEliminar.classList.add("btn", "btn-outline-danger", "btn-sm");
+  btnEliminar.title = "Eliminar tarea";
+
+  btnEliminar.addEventListener("click", () => {
+    // Mostrar confirmacion
+    tareaAEliminar = tarea.id_tarea;
+    filaAEliminar = fila;
+    modalConfirmacionEliminacion.show();
+  });
+
+  tdEliminar.appendChild(btnEliminar);
+  fila.appendChild(tdEliminar);
+
   tabla.appendChild(fila);
 }
 
@@ -196,4 +229,23 @@ function actualizarEstadoTarea(id, estado) {
     })
     .then((data) => console.log("Tarea actualizada:", data))
     .catch((error) => console.error("Error al actualizar el estado:", error));
+}
+
+function eliminarTarea(id, filaElemento) {
+  fetch(`http://localhost:3000/api/tareas/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (response.status === 204) {
+        filaElemento.remove(); // Eliminar fila de la tabla
+      } else if (response.status === 404) {
+        alert("Tarea no encontrada.");
+      } else {
+        throw new Error("Error al eliminar la tarea.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error al eliminar tarea:", error);
+      alert("Ocurrió un error al intentar eliminar la tarea.");
+    });
 }
