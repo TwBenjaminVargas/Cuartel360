@@ -24,9 +24,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 const celdaDescripcion = document.createElement("td");
                 celdaDescripcion.textContent = tarea.descripcion;
 
+                // Badge de prioridad
+                const celdaPrioridad = document.createElement("td");
+                const badge = document.createElement("span");
+                badge.textContent = tarea.prioridad.charAt(0).toUpperCase() + tarea.prioridad.slice(1);
+                badge.classList.add("badge");
+
+                if (tarea.prioridad === "alta") badge.classList.add("bg-danger");
+                else if (tarea.prioridad === "media") badge.classList.add("bg-warning");
+                else if (tarea.prioridad === "baja") badge.classList.add("bg-success");
+
+                celdaPrioridad.appendChild(badge);
+
                 // Agregar celdas en orden (checkbox primero)
                 fila.appendChild(celdaCheckbox);
                 fila.appendChild(celdaDescripcion);
+                fila.appendChild(celdaPrioridad);
 
                 tabla.appendChild(fila);
             });
