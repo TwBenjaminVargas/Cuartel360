@@ -5,9 +5,7 @@ const authMiddleware = require('../../middleware/auth.middleware');
 const { error } = require('console');
 const router = express.Router();
 
-/**
- * Enpoint GET para solicitud de tareas de un usuario
- */
+// Muestra tareas vista usuario
 router.get('/api/tareasUser',authMiddleware(2), async (req, res) => {
     try
     {
@@ -20,9 +18,8 @@ router.get('/api/tareasUser',authMiddleware(2), async (req, res) => {
     }
     
 });
-/**
- * Enpoint GET para solicitud de tareas de un administrador
- */
+
+// Muestra tareas vista administrador
 router.get('/api/tareasAdmin',authMiddleware(1), async (req, res) => {
      try
     {
@@ -35,13 +32,14 @@ router.get('/api/tareasAdmin',authMiddleware(1), async (req, res) => {
     }
 });
 
+// Cambio de estado de tareas
 router.put("/api/tareas/:id",authMiddleware(2), async (req, res) => {
     const id_tarea = Number(req.params.id);
     const estado = Number(req.body.estado);
 
-    if (isNaN(id_tarea) || isNaN(estado)) {
+    if (isNaN(id_tarea) || isNaN(estado))
         return res.status(400).json({ error: 'ID o estado inválidos.' });
-    }
+    
     try {
         await tareasService.actualizarEstadoTarea(id_tarea, estado);
         res.status(200).json({ mensaje: 'Tarea actualizada correctamente.' });
@@ -52,14 +50,14 @@ router.put("/api/tareas/:id",authMiddleware(2), async (req, res) => {
     }
 });
 
-/**
- * Endpoint para agregar tareas
- */
+// Añade tareas
 router.post('/api/tareas',authMiddleware(1), async (req, res) =>
 {
     const {descripcion, email, prioridad} = req.body;
+    
     if(!descripcion?.trim() || !email?.trim() || !prioridad?.trim())
         return res.status(400).json({ error: 'Faltan campos requeridos' });
+    
     if (typeof descripcion !== 'string' || typeof email !== "string" || typeof prioridad !== "string")
         return res.status(400).json({ error: 'Datos incompatibles' });
     try
@@ -73,6 +71,24 @@ router.post('/api/tareas',authMiddleware(1), async (req, res) =>
         console.log("Error en POST api tareas: ", error);
         return res.status(401).json({ error: error.message });
     }
+});
+
+// Borrar tarea lógicamente (Perduran en BD como historial)
+router.delete('/api/tareas/:id', async (req, res) => {
+  try
+  {
+    const id_tarea = Number(req.params.id);
+    const result = await tareasService.borrarTarea(id_tarea);
+    if (result === 0)
+      return res.status(404).json({ mensaje: 'Tarea no encontrada' });
+
+    return res.status(204).send(); // borrado exitoso
+  } 
+  catch (error)
+  {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al borrar la tarea' });
+  }
 });
 
 module.exports = router;
