@@ -16,12 +16,12 @@ module.exports =
         const cuartel = await Cuartel.findOne({where:{codigo}});
         if(!cuartel) throw new Error('Cuartel no encotrado');
 
-        const inventarios = await InventarioPersonal.findAll( {where : {id_cuartel:cuartel.id_cuartel}});
+        const inventarios = await InventarioPersonal.findAll( {where : {id_cuartel:cuartel.id_cuartel}, paranoid: true});
         
         const inventariosDetallados = await Promise.all(inventarios.map(async(inventario) =>
         {
             const bombero = await Bombero.findOne({where : {id_bombero : inventario.id_bombero}});
-            const elemento = await Elemento.findOne({where : {id_elemento : inventario.id_elemento}});
+            const elemento = await Elemento.findOne({where : {id_elemento : inventario.id_elemento}, paranoid: true});
             const estado = await Estado.findOne({where : {id_estado : inventario.id_estado}});
             return{
                 id_inventario:inventario.id_inventario,
@@ -161,6 +161,15 @@ module.exports =
             if(update === 0) throw new Error(`Error al actualizar el estado`);
         }
 
-    }
+    },
+
+    /**
+     * Elimina una inventario por su ID.
+     * @param {number} id_inventario - ID del inventario a eliminar.
+     * @returns {Promise<number>} Cantidad de filas eliminadas (0 si no se encontró el inventario).
+     * @throws {Error} Si ocurre un problema con la base de datos.
+     */
+    borrarInventario : async(id_inventario)=>
+    {return await InventarioPersonal.destroy({ where: { id_inventario} });}
 
 }
