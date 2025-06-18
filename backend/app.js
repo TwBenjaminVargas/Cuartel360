@@ -17,8 +17,8 @@ const apiTareas = require('./routes/api/api.tareas.route');
 app.use('/',apiTareas);
 const apiInventario = require('./routes/api/api.inventario.route');
 app.use('/',apiInventario);
-const buscador = require('./routes/search.route');
-app.use('/',buscador);
+const apiBuscador = require('./routes/api/api.search.route');
+app.use('/',apiBuscador);
 
 // Endpoint Login
 const authRoutes = require('./routes/auth.route');
