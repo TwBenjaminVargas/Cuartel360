@@ -36,6 +36,16 @@ router.post('/', async (req, res) => {
   
 });
 
+// POST logout
+router.post('/logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+  });
+  return res.redirect('/');
+});
+
 // Valida el cuerpo del request
 function validarRequest(email, contraseña)
 {return typeof email === 'string' && typeof contraseña === 'string';}
