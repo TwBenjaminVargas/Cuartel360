@@ -81,6 +81,11 @@ const codigoCuartel = datos_usuario.codigo;
             <td>${item.nombre}</td>
             <td>${item.elemento}</td>
             <td>${item.estado}</td>
+            <td>
+              <button class="btn btn-outline-danger btn-sm" data-id="${item.id_inventario}">
+                🗑️
+              </button>
+            </td>
           `;
           tbody.appendChild(tr);
         });
@@ -174,4 +179,33 @@ modalNuevo.addEventListener('hidden.bs.modal', () => {
   form.reset();          
   inputEmail.value = '';  
   clearSugerencias();    
+});
+
+//eliminar inventario
+let idAEliminar = null;
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-eliminar")) {
+    idAEliminar = e.target.dataset.id;
+    const modal = new bootstrap.Modal(document.getElementById("confirmarEliminarModal"));
+    modal.show();
+  }
+});
+
+document.getElementById("btnConfirmarEliminar").addEventListener("click", () => {
+  if (!idAEliminar) return;
+
+  fetch(`/api/inventario/${idAEliminar}`, {
+    method: "DELETE"
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("No se pudo eliminar");
+      const modal = bootstrap.Modal.getInstance(document.getElementById("confirmarEliminarModal"));
+      modal.hide();
+      cargarInventario(); // Recargar la tabla
+    })
+    .catch(err => {
+      console.error("Error al eliminar:", err);
+      alert("Ocurrio un error al eliminar el inventario.");
+    });
 });
