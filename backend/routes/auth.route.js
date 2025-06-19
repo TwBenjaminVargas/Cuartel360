@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const authService = require('../service/auth.service');
-const authMiddleware = require('../middleware/auth.middleware')
+const loginSkipMiddleware = require('../middleware/loginskip.middleware')
 
 // Servir pagina principal
-router.get('/', (req, res) =>
+router.get('/',loginSkipMiddleware(),(req, res) =>
 {return res.sendFile(path.join(__dirname, '../../frontend/views/index.html'));});
 
 // Iniciar sesión
