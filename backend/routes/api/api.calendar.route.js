@@ -4,31 +4,34 @@ const calendarService = require('../../service/calendar.service');
 const authMiddleware = require('../../middleware/auth.middleware');
 const router = express.Router();
 
-
+// GET vista guardias
 router.get('/api/guardias',authMiddleware(3), async (req, res) =>
 {
     const year = parseInt(req.query.year);
     const month = parseInt(req.query.month);
+    
     if (!year || !month)
       return res.status(400).json({ error: 'Datos incompatibles' })
-    res.json(await calendarService.getGrillaGuardia(year,month));
+    
+    return res.json(await calendarService.getGrillaGuardia(year,month));
 
 });
 
+//POST añadir guardia
 router.post('/api/guardias',authMiddleware(1), async (req, res) => 
 {
     const { email, start, end } = req.body;
     
-    if (typeof email !== 'string' ||
-        typeof start !== 'string' ||
-        typeof end !== 'string') 
+    if (typeof email !== 'string'
+        || typeof start !== 'string'
+        || typeof end !== 'string') 
         return res.status(400).json({ error: 'Datos incompatibles' });
     
     const startDate = new Date(start);
     const endDate = new Date(end);
 
-    if (isNaN(startDate.getTime()) ||
-        isNaN(endDate.getTime()))
+    if (isNaN(startDate.getTime())
+        || isNaN(endDate.getTime()))
         return res.status(400).json({ error: 'Formato de fecha invalido' });
 
     try 
