@@ -4,46 +4,43 @@ const authMiddleware = require('../middleware/auth.middleware');
 const userDataService = require('../service/userData.service');
 const router = express.Router();
 
-
+// GET vista de perfil de usuario
 router.get('/perfilUser',authMiddleware(2),(req, res) => {
     return res.sendFile(path.join(__dirname, '../../frontend/views/perfilUser.html'));
 });
 
+// GET vista de perfil de admin
 router.get('/perfilAdmin',authMiddleware(1),(req, res) => {
     return res.sendFile(path.join(__dirname, '../../frontend/views/perfilAdmin.html'));
 });
 
-/**
- * Espera un email y devuelve la informacion de un usuario
- */
+// GET datos del perfil del usuario
 router.get('/perfilUser/data',authMiddleware(2), async (req, res) => {
-    email = req.query.email
-    if(typeof email !== "string") return res.status(400).json({ error: 'Dato invalido' });
+
     try
     {
-        datos = await userDataService.showUserData(email);
+        datos = await userDataService.showUserData(req.usuario.id);
         return res.json(datos);
     }
     catch (error)
     {
-        return res.status(401).json({ error: error.message });
+        console.log(error.message);
+        return res.status(500).json({message: "Error al obtener los datos de perfil"});
     }   
 });
-/**
- * Devuelve los datos de un administrador
- * Espera que se le envie un email de administrador.
- */
+
+// GET datos de perfil administrador
 router.get('/perfilAdmin/data',authMiddleware(1), async (req, res) => {
-    email = req.query.email
-    if(typeof email !== "string") return res.status(400).json({ error: 'Dato invalido' });
     try
     {
-        datos = await userDataService.showAdminData(email);
+        datos = await userDataService.showAdminData(req.usuario.id);
         return res.json(datos);
     }
     catch (error)
     {
-        return res.status(401).json({ error: error.message });
+        console.log(error.message);
+        return res.status(500).json({message: "Error al obtener los datos de perfil"});
     }   
 });
+
 module.exports = router;
