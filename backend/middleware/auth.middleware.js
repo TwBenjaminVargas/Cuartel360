@@ -4,11 +4,16 @@ const authMiddleware = (rol) => {
     return async (req, res, next) => {
         try 
         {
-            const token = req.cookies.token;
-            const tokenPayload = await authService.validateToken(token);
-            if(tokenPayload.rol > rol)
-                return res.status(401).json({ error: 'Rol no autorizado' });
-            req.usuario = tokenPayload;
+            let tokenPayload = req.usuario;
+            if(!tokenPayload)
+            {
+                const token = req.cookies.token;
+                tokenPayload = await authService.validateToken(token);
+                req.usuario = tokenPayload;
+            }
+
+            if(rol != 3 && tokenPayload.rol != rol)
+                    return res.status(401).json({ error: 'Rol no autorizado' });
             next();
         }
         catch (error)

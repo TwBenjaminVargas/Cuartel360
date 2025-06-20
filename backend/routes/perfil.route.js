@@ -9,7 +9,7 @@ router.get('/perfilUser',authMiddleware(2),(req, res) => {
     return res.sendFile(path.join(__dirname, '../../frontend/views/perfilUser.html'));
 });
 
-router.get('/perfilAdmin',authMiddleware(2),(req, res) => {
+router.get('/perfilAdmin',authMiddleware(1),(req, res) => {
     return res.sendFile(path.join(__dirname, '../../frontend/views/perfilAdmin.html'));
 });
 

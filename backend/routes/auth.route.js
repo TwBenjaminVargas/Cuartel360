@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const authService = require('../service/auth.service');
-const authMiddleware = require('../middleware/auth.middleware')
+const loginSkipMiddleware = require('../middleware/loginskip.middleware')
 
 // Servir pagina principal
-router.get('/', (req, res) =>
+router.get('/',loginSkipMiddleware(),(req, res) =>
 {return res.sendFile(path.join(__dirname, '../../frontend/views/index.html'));});
 
 // Iniciar sesión
@@ -34,6 +34,16 @@ router.post('/', async (req, res) => {
     return res.status(401).json({ error: error.message });
   }
   
+});
+
+// POST logout
+router.post('/logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+  });
+  return res.redirect('/');
 });
 
 // Valida el cuerpo del request
