@@ -10,6 +10,14 @@ app.use('/node_modules', express.static(path.join(__dirname, '../node_modules'))
 app.use(express.json()); // Middleware para procesar JSON
 app.use(cookieParser()); // Middleware para procesar Cookies
 
+// Evita cacheo de todas las páginas
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
+
 //APIS
 const apiCalendar = require('./routes/api/api.calendar.route');
 app.use('/',apiCalendar);
