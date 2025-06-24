@@ -50,7 +50,7 @@ router.get('/api/inventario/elementos',authMiddleware(1), async (req, res) =>
     });
     
 // GET estados posibles
-router.get('/api/inventario/estados',authMiddleware(2), async (req, res) => 
+router.get('/api/inventario/estados',authMiddleware(3), async (req, res) => 
 {
     const estados = await inventarioService.getListaEstados();
     if(estados.length < 1) return res.status(200).json({ mensaje: 'No se encontraron registros' });
