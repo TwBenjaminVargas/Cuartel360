@@ -33,7 +33,7 @@ router.get('/api/tareasAdmin',authMiddleware(1), async (req, res) => {
 });
 
 // Cambio de estado de tareas
-router.put("/api/tareas/:id",authMiddleware(2), async (req, res) => {
+router.put("/api/tareas/:id",authMiddleware(3), async (req, res) => {
     const id_tarea = Number(req.params.id);
     const estado = Number(req.body.estado);
 
