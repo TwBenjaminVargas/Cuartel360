@@ -17,8 +17,19 @@ module.exports =
 
      const cuartel = await Cuartel.findOne({where : {codigo}});
      if(!cuartel) throw new Error('Condigo de cuartel invalido');
+     
+     //buscar al administrador del cuartel
+     const admin = await Bombero.findOne({where : {id_cuartel:cuartel.id_cuartel}, id_superior:null});
      const newuser = await Bombero.create({
-        email, contraseña: await encryptService.encriptar(contraseña),id_cuartel: cuartel.id_cuartel,id_rol : 2, nombre,apellido});
+        email,
+        contraseña: await encryptService.encriptar(contraseña),
+        id_cuartel: cuartel.id_cuartel,
+        id_rol : 2,
+        id_superior:admin.id_bombero,
+        nombre,
+        apellido,
+        dni,
+        rango : "Bombero"});
     if (!newuser) throw new Error('Fallo al crear usuario');
   }
 }
