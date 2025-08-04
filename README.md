@@ -1,7 +1,7 @@
 # Cuartel 360
 
 <p align="center">
-  <img src="frontend/public/img/Logo2.png" alt="Logo Cuartel 360" width="200" />
+  <img src="frontend/public/img/Logo2.png" alt="Logo Cuartel 360" width="400" />
 </p>
 
 Gestión básica de un cuartel de bomberos: calendario de guardias, lista de tareas e inventario.
